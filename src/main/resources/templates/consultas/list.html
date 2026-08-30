@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Consultas Cadastradas</title>
 </head>
 <body>
@@ -21,7 +22,7 @@
     <p th:if="${erro}" th:text="${erro}" class="erro"></p>
     <p th:if="${sucesso}" th:text="${sucesso}" class="sucesso"></p>
 
-   <table class="table" border="1">
+   <table>
        <thead>
        <tr>
            <th>Data e Hora</th>
@@ -41,7 +42,7 @@
             <td th:text="${c.valor}"></td>
         <!--<td> <a th:href="@{/consultas/edit/{id}(id=${c.id})}">Editar</a></td> -->
             <td> <a th:href="|/consultas/edit/${c.id}|">Editar</a></td>
-            <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"  th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
+            <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
         </tr>
     </table>
 </body>

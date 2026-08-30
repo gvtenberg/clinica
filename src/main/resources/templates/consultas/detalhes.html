@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Consultas</title>
 </head>
 <body>
     <h1 th:text="${paciente == null ? 'Consultas do(a) Médico(a) ' + medico.nome : 'Consultas do(a) Paciente ' + paciente.nome}"></h1>
 
-    <table class="table" border="1">
+    <table>
         <thead>
         <tr>
             <th>Data e Hora</th>
@@ -25,7 +26,7 @@
             <td th:text="${c.observacao}"></td>
             <td th:text="${c.valor}"></td>
             <td> <a th:href="|/consultas/edit/${c.id}|">Editar</a></td>
-            <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"  th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
+            <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
         </tr>
     </table>
 </body>

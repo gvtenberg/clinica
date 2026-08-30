@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Médicos Cadastrados</title>
 </head>
 <body>
@@ -21,7 +22,7 @@
     <p th:if="${erro}" th:text="${erro}" class="erro"></p>
     <p th:if="${sucesso}" th:text="${sucesso}" class="sucesso"></p>
 
-    <table class="table" border="1">
+    <table>
         <thead>
         <tr>
             <th>Nome</th>
@@ -34,7 +35,7 @@
             <td th:text="${m.crm}"></td>
         <!--<td> <a th:href="@{/medicos/edit/{id}(id=${m.id})}">Editar</a></td> -->
             <td> <a th:href="|/medicos/edit/${m.id}|">Editar</a></td>
-            <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"  th:href="|/medicos/remove/${m.id}|">Excluir</a></td>
+            <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/medicos/remove/${m.id}|">Excluir</a></td>
             <td> <a th:href="|/consultas/medico/${m.id}|">Consultas</a></td>
         </tr>
     </table>
