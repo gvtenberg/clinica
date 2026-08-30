@@ -1,5 +1,6 @@
+/* ===== Base ===== */
 body {
-    font-family: Arial, Helvetia, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
     line-height: 1.5;
     color: #1f2937;
@@ -17,7 +18,14 @@ h1 {
     margin-bottom: 24px;
 }
 
-button, input[type="submit"] {
+/* ===== Botões ===== */
+
+button, input[type="submit"], a.botao {
+    box-sizing: border-box;
+    display: inline-block;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
     width: auto;
     min-width: 200px;
     font-family: inherit;
@@ -31,19 +39,22 @@ button, input[type="submit"] {
     margin-bottom: 8px;
 }
 
-button.secundario {
+button:hover, input[type="submit"]:hover, a.botao:hover {
+    background-color: #0b433f;
+}
+
+a.botao.secundario, button.secundario {
     background-color: #ffffff;
     color: #0f5c56;
     border: 2px solid #0f5c56;
 }
 
-button.secundario:hover {
+a.botao.secundario:hover, button.secundario:hover {
     background-color: #dfeae9;
+    color: #0f5c56;
 }
 
-button:hover, input[type="submit"]:hover {
-    background-color: #0b433f;
-}
+/* ===== Formulários ===== */
 
 label {
     display: block;
@@ -63,6 +74,12 @@ input, select {
     border-radius: 4px;
     background-color: #ffffff;
 }
+
+select {
+    cursor: pointer;
+}
+
+/* ===== Tabelas ===== */
 
 table {
     border-collapse: collapse;
@@ -88,6 +105,13 @@ tbody tr:nth-child(even) {
 
 td a {
     color: #0f5c56;
+    text-decoration: none;
+}
+
+td a:hover {
+    color: #0b433f;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
 }
 
 td.numero {
@@ -110,10 +134,14 @@ a.excluir:hover {
     color: #8b2419;
 }
 
-a:focus, button:focus, input:focus, select:focus {
+/* ===== Foco ===== */
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
     outline: 3px solid #0f5c56;
     outline-offset: 2px;
 }
+
+/* ===== Mensagens ===== */
 
 .erro, .sucesso {
     margin: 16px 0;

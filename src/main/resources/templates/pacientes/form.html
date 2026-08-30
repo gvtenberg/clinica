@@ -18,7 +18,7 @@
         <input type="hidden" th:field="*{id}">
         <label>Nome: <input type="text" th:field="*{nome}" placeholder="Nome" required></label>
         <label>Telefone: <input type="text" th:field="*{telefone}" placeholder="Telefone" required></label>
-        <input type="submit" th:value="${paciente.id == null} ? 'Cadastrar' : 'Salvar Alterações'">
+        <input type="submit" th:value="${paciente.id == null} ? 'Cadastrar Paciente' : 'Salvar Alterações'">
     </form>
 </body>
 </html>

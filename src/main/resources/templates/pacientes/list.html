@@ -9,14 +9,11 @@
 <body>
     <h1>Pacientes Cadastrados</h1>
 
-    <a th:href="@{/pacientes/form}">
-        <button type="button">Cadastrar Pacientes</button></a>
+    <a class="botao" th:href="@{/pacientes/form}">Cadastrar Pacientes</a>
     &nbsp;
-    <a th:href="@{/consultas/list}">
-        <button type="button" class="secundario">Ver Consultas</button></a>
+    <a class="botao secundario" th:href="@{/consultas/list}">Ver Consultas</a>
     &nbsp;
-    <a th:href="@{/medicos/list}">
-        <button type="button" class="secundario">Ver Médicos</button></a>
+    <a class="botao secundario" th:href="@{/medicos/list}">Ver Médicos</a>
 
     <!-- Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view -->
     <p th:if="${erro}" th:text="${erro}" class="erro"></p>

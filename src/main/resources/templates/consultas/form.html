@@ -27,7 +27,7 @@
         </select></label>
         <label>Observação: <input type="text" th:field="*{observacao}" placeholder="Observação"></label>
         <label>Valor: <input type="number" step="0.01" th:field="*{valor}" placeholder="Valor" required></label>
-        <input type="submit" th:value="${consulta.id == null} ? 'Cadastrar' : 'Salvar Alterações'">
+        <input type="submit" th:value="${consulta.id == null} ? 'Cadastrar Consulta' : 'Salvar Alterações'">
     </form>
 </body>
 </html>

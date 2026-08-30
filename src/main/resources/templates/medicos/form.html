@@ -18,7 +18,7 @@
         <input type="hidden" th:field="*{id}">
         <label>Nome: <input type="text" th:field="*{nome}" placeholder="Nome" required></label>
         <label>CRM: <input type="text" th:field="*{crm}" placeholder="CRM" required></label>
-        <input type="submit" th:value="${medico.id == null} ? 'Cadastrar' : 'Salvar Alterações'">
+        <input type="submit" th:value="${medico.id == null} ? 'Cadastrar Médico' : 'Salvar Alterações'">
     </form>
 </body>
 </html>
