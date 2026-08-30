@@ -39,7 +39,7 @@ public class Paciente implements Serializable {
      * @OneToMany representa a multiplicidade 1 - 0..* do diagrama de classes: um paciente
      * pode possuir várias consultas.
      * O atributo mappedBy indica que esta é a extremidade inversa da associação, ou seja,
-     * a chave estrangeira está na tabela consulta, no atributo medico da classe Consulta.
+     * a chave estrangeira está na tabela consulta, no atributo paciente da classe Consulta.
      * O lado que contém a chave estrangeira é chamado de lado dono, e é o único capaz de
      * gravar a associação. Por isso, alterações feitas nesta coleção não chegam ao banco
      */

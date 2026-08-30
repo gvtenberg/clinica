@@ -4,6 +4,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 *.lock.db
+*.mv.db
+*.trace.db
 
 ### STS ###
 .apt_generated

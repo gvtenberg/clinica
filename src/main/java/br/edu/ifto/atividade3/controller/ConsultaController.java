@@ -193,8 +193,7 @@ public class ConsultaController {
 
     /**
      * @param consulta objeto preenchido a partir do formulário
-     * @param result resultado da validação, onde as mensagens de erro são registradas
-     * @return true se médico e paciente foram selecionados e não há outros erros de validação.
+     * @param result resultado da validação, onde as mensagens de erro são registradas.
      * O formulário envia apenas o identificador do médico e do paciente. Quando nenhuma opção é
      * selecionada, o Spring cria um objeto Medico e um objeto Paciente com identificador nulo.
      * A anotação @NotNull verifica apenas se o objeto existe, e como ele existe, a validação passa.
