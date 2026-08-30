@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas</title>
+</head>
+<body>
+    <h1 th:text="${paciente == null ? 'Consultas do(a) Médico(a) ' + medico.nome : 'Consultas do(a) Paciente ' + paciente.nome}"></h1>
+
+    <table class="table" border="1">
+        <thead>
+        <tr>
+            <th>Data e Hora</th>
+            <th th:text="${paciente == null ? 'Paciente' : 'Médico'}"></th>
+            <th>Observação</th>
+            <th>Valor</th>
+            <th colspan="2">Ações</th>
+        </tr>
+        </thead>
+        <tr th:each="c : ${consultas}">
+            <!--<td th:text="${c.data}"></td>-->
+            <td th:text="${#temporals.format(c.data, 'dd/MMM/yyyy ''às'' HH:mm')}"></td> <!-- 25/Ago/2026 às 19:30 -->
+            <td th:text="${paciente == null ? c.paciente.nome : c.medico.nome}"></td>
+            <td th:text="${c.observacao}"></td>
+            <td th:text="${c.valor}"></td>
+            <td> <a th:href="|/consultas/edit/${c.id}|">Editar</a></td>
+            <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"  th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
+        </tr>
+    </table>
+</body>
+</html>

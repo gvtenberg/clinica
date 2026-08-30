@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Médicos</title>
+</head>
+<body>
+    <h1>Formulário para Cadastro de Médicos</h1>
+
+    <form th:action="${medico.id == null} ? @{/medicos/save} : @{/medicos/update}" th:object="${medico}" method="post">
+        <div th:if="${#fields.hasAnyErrors()}" role="alert"> <!-- Exibe as mensagens de erro cadastradas nos atributos da Entidade -->
+            <p th:each="erro : ${#fields.allErrors()}" th:text="${erro}"></p>
+        </div>
+
+        <input type="hidden" th:field="*{id}">
+        <label>Nome: <input type="text" th:field="*{nome}" placeholder="Nome" required></label>
+        <label>CRM: <input type="text" th:field="*{crm}" placeholder="CRM" required></label>
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>

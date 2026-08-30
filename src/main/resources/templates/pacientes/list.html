@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacientes Cadastrados</title>
+</head>
+<body>
+    <h1>Pacientes Cadastrados</h1>
+
+    <a th:href="@{/pacientes/form}">
+        <button type="button">Cadastrar Pacientes</button></a>
+    &nbsp;
+    <a th:href="@{/consultas/list}">
+        <button type="button">Ver Consultas</button></a>
+    &nbsp;
+    <a th:href="@{/medicos/list}">
+        <button type="button">Ver Médicos</button></a>
+
+    <p th:if="${erro}" th:text="${erro}" class="erro"></p>
+    <p th:if="${sucesso}" th:text="${sucesso}" class="sucesso"></p>
+
+    <table class="table" border="1">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th colspan="3">Ações</th>
+        </tr>
+        </thead>
+        <tr th:each="p : ${pacientes}">
+            <td th:text="${p.nome}"></td>
+            <td th:text="${p.telefone}"></td>
+        <!--<td> <a th:href="@{/pacientes/edit/{id}(id=${p.id})}">Editar</a></td> -->
+            <td> <a th:href="|/pacientes/edit/${p.id}|">Editar</a></td>
+            <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"  th:href="|/pacientes/remove/${p.id}|">Excluir</a></td>
+            <td> <a th:href="|/consultas/paciente/${p.id}|">Consultas</a></td>
+        </tr>
+    </table>
+</body>
+</html>

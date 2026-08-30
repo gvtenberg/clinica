@@ -1,0 +1,345 @@
+2026-08-29 17:51:04.137065-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO paciente (id, nome, telefone) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO paciente (id, nome, telefone) VALUES [42001-240]
+2026-08-29 17:51:04.138712-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, 'Ana Beatriz Souza', '(63) 99912-3456'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, 'Ana Beatriz Souza', '(63) 99912-3456'), [42001-240]
+2026-08-29 17:51:04.139306-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, 'Carlos Henrique Lima', '(63) 99876-5432'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, 'Carlos Henrique Lima', '(63) 99876-5432'), [42001-240]
+2026-08-29 17:51:04.139843-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, 'Mariana Oliveira Costa', '(63) 99123-4567'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, 'Mariana Oliveira Costa', '(63) 99123-4567'), [42001-240]
+2026-08-29 17:51:04.140330-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, 'João Pedro Martins', '(63) 99234-5678'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, 'João Pedro Martins', '(63) 99234-5678'), [42001-240]
+2026-08-29 17:51:04.140760-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]5, 'Fernanda Alves Rocha', '(63) 99345-6789'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(5, 'Fernanda Alves Rocha', '(63) 99345-6789'), [42001-240]
+2026-08-29 17:51:04.141164-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]6, 'Lucas Gabriel Santos', '(63) 99456-7890')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(6, 'Lucas Gabriel Santos', '(63) 99456-7890') [42001-240]
+2026-08-29 17:51:04.141620-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO medico (id, nome, crm) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO medico (id, nome, crm) VALUES [42001-240]
+2026-08-29 17:51:04.142042-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, 'Roberto Almeida', 'CRM-TO 12345'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, 'Roberto Almeida', 'CRM-TO 12345'), [42001-240]
+2026-08-29 17:51:04.142454-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, 'Juliana Mendes', 'CRM-TO 23456'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, 'Juliana Mendes', 'CRM-TO 23456'), [42001-240]
+2026-08-29 17:51:04.142832-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, 'Marcos Vinicius Ferreira', 'CRM-TO 34567'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, 'Marcos Vinicius Ferreira', 'CRM-TO 34567'), [42001-240]
+2026-08-29 17:51:04.143219-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, 'Patrícia Ribeiro', 'CRM-TO 45678')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, 'Patrícia Ribeiro', 'CRM-TO 45678') [42001-240]
+2026-08-29 17:51:04.143677-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES [42001-240]
+2026-08-29 17:51:04.144091-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina',     1, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina',     1, 1), [42001-240]
+2026-08-29 17:51:04.144506-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, '2026-08-25 09:30:00', 300.00, 'Acompanhamento clínico', 2, 2),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, '2026-08-25 09:30:00', 300.00, 'Acompanhamento clínico', 2, 2), [42001-240]
+2026-08-29 17:51:04.144937-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, '2026-08-25 11:00:00', 280.00, 'Avaliação inicial',      3, 3),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, '2026-08-25 11:00:00', 280.00, 'Avaliação inicial',      3, 3), [42001-240]
+2026-08-29 17:51:04.145341-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, '2026-08-26 08:30:00', 250.00, 'Retorno médico',         4, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, '2026-08-26 08:30:00', 250.00, 'Retorno médico',         4, 1), [42001-240]
+2026-08-29 17:51:04.145769-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]5, '2026-08-26 10:00:00', 350.00, 'Consulta especializada', 5, 4),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(5, '2026-08-26 10:00:00', 350.00, 'Consulta especializada', 5, 4), [42001-240]
+2026-08-29 17:51:04.146219-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]6, '2026-08-26 14:00:00', 220.00, 'Consulta de rotina',     6, 2),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(6, '2026-08-26 14:00:00', 220.00, 'Consulta de rotina',     6, 2), [42001-240]
+2026-08-29 17:51:04.146652-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]7, '2026-08-27 09:00:00', 300.00, 'Acompanhamento clínico', 1, 3),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(7, '2026-08-27 09:00:00', 300.00, 'Acompanhamento clínico', 1, 3), [42001-240]
+2026-08-29 17:51:04.147086-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]8, '2026-08-27 10:30:00', 250.00, 'Retorno médico',         2, 4),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(8, '2026-08-27 10:30:00', 250.00, 'Retorno médico',         2, 4), [42001-240]
+2026-08-29 17:51:04.147497-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames',    3, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames',    3, 1), [42001-240]
+2026-08-29 17:51:04.147917-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 3)"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 3) [42001-240]
+2026-08-29 17:51:59.905251-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO paciente (id, nome, telefone) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO paciente (id, nome, telefone) VALUES [42001-240]
+2026-08-29 17:51:59.906405-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, 'Ana Beatriz Souza', '(63) 99912-3456'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, 'Ana Beatriz Souza', '(63) 99912-3456'), [42001-240]
+2026-08-29 17:51:59.906919-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, 'Carlos Henrique Lima', '(63) 99876-5432'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, 'Carlos Henrique Lima', '(63) 99876-5432'), [42001-240]
+2026-08-29 17:51:59.907331-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, 'Mariana Oliveira Costa', '(63) 99123-4567'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, 'Mariana Oliveira Costa', '(63) 99123-4567'), [42001-240]
+2026-08-29 17:51:59.907747-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, 'João Pedro Martins', '(63) 99234-5678'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, 'João Pedro Martins', '(63) 99234-5678'), [42001-240]
+2026-08-29 17:51:59.908158-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]5, 'Fernanda Alves Rocha', '(63) 99345-6789'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(5, 'Fernanda Alves Rocha', '(63) 99345-6789'), [42001-240]
+2026-08-29 17:51:59.908565-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]6, 'Lucas Gabriel Santos', '(63) 99456-7890')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(6, 'Lucas Gabriel Santos', '(63) 99456-7890') [42001-240]
+2026-08-29 17:51:59.908983-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO medico (id, nome, crm) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO medico (id, nome, crm) VALUES [42001-240]
+2026-08-29 17:51:59.909384-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, 'Roberto Almeida', 'CRM-TO 12345'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, 'Roberto Almeida', 'CRM-TO 12345'), [42001-240]
+2026-08-29 17:51:59.909766-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, 'Juliana Mendes', 'CRM-TO 23456'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, 'Juliana Mendes', 'CRM-TO 23456'), [42001-240]
+2026-08-29 17:51:59.910159-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, 'Marcos Vinicius Ferreira', 'CRM-TO 34567'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, 'Marcos Vinicius Ferreira', 'CRM-TO 34567'), [42001-240]
+2026-08-29 17:51:59.910561-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, 'Patrícia Ribeiro', 'CRM-TO 45678')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, 'Patrícia Ribeiro', 'CRM-TO 45678') [42001-240]
+2026-08-29 17:51:59.910997-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES [42001-240]
+2026-08-29 17:51:59.911415-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina',     1, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina',     1, 1), [42001-240]
+2026-08-29 17:51:59.911831-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, '2026-08-25 09:30:00', 300.00, 'Acompanhamento clínico', 2, 2),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, '2026-08-25 09:30:00', 300.00, 'Acompanhamento clínico', 2, 2), [42001-240]
+2026-08-29 17:51:59.912233-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, '2026-08-25 11:00:00', 280.00, 'Avaliação inicial',      3, 3),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, '2026-08-25 11:00:00', 280.00, 'Avaliação inicial',      3, 3), [42001-240]
+2026-08-29 17:51:59.912643-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, '2026-08-26 08:30:00', 250.00, 'Retorno médico',         4, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, '2026-08-26 08:30:00', 250.00, 'Retorno médico',         4, 1), [42001-240]
+2026-08-29 17:51:59.913044-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]5, '2026-08-26 10:00:00', 350.00, 'Consulta especializada', 5, 4),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(5, '2026-08-26 10:00:00', 350.00, 'Consulta especializada', 5, 4), [42001-240]
+2026-08-29 17:51:59.913458-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]6, '2026-08-26 14:00:00', 220.00, 'Consulta de rotina',     6, 2),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(6, '2026-08-26 14:00:00', 220.00, 'Consulta de rotina',     6, 2), [42001-240]
+2026-08-29 17:51:59.913916-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]7, '2026-08-27 09:00:00', 300.00, 'Acompanhamento clínico', 1, 3),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(7, '2026-08-27 09:00:00', 300.00, 'Acompanhamento clínico', 1, 3), [42001-240]
+2026-08-29 17:51:59.914342-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]8, '2026-08-27 10:30:00', 250.00, 'Retorno médico',         2, 4),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(8, '2026-08-27 10:30:00', 250.00, 'Retorno médico',         2, 4), [42001-240]
+2026-08-29 17:51:59.914756-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames',    3, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames',    3, 1), [42001-240]
+2026-08-29 17:51:59.915138-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 3)"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 3) [42001-240]
+2026-08-29 17:53:31.689153-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO paciente (id, nome, telefone) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO paciente (id, nome, telefone) VALUES [42001-240]
+2026-08-29 17:53:31.690095-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, 'Ana Beatriz Souza', '(63) 99912-3456'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, 'Ana Beatriz Souza', '(63) 99912-3456'), [42001-240]
+2026-08-29 17:53:31.690690-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, 'Carlos Henrique Lima', '(63) 99876-5432'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, 'Carlos Henrique Lima', '(63) 99876-5432'), [42001-240]
+2026-08-29 17:53:31.691117-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, 'Mariana Oliveira Costa', '(63) 99123-4567'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, 'Mariana Oliveira Costa', '(63) 99123-4567'), [42001-240]
+2026-08-29 17:53:31.691529-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, 'João Pedro Martins', '(63) 99234-5678'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, 'João Pedro Martins', '(63) 99234-5678'), [42001-240]
+2026-08-29 17:53:31.691915-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]5, 'Fernanda Alves Rocha', '(63) 99345-6789'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(5, 'Fernanda Alves Rocha', '(63) 99345-6789'), [42001-240]
+2026-08-29 17:53:31.692318-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]6, 'Lucas Gabriel Santos', '(63) 99456-7890')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(6, 'Lucas Gabriel Santos', '(63) 99456-7890') [42001-240]
+2026-08-29 17:53:31.692777-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO medico (id, nome, crm) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO medico (id, nome, crm) VALUES [42001-240]
+2026-08-29 17:53:31.693167-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, 'Roberto Almeida', 'CRM-TO 12345'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, 'Roberto Almeida', 'CRM-TO 12345'), [42001-240]
+2026-08-29 17:53:31.693540-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, 'Juliana Mendes', 'CRM-TO 23456'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, 'Juliana Mendes', 'CRM-TO 23456'), [42001-240]
+2026-08-29 17:53:31.693910-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, 'Marcos Vinicius Ferreira', 'CRM-TO 34567'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, 'Marcos Vinicius Ferreira', 'CRM-TO 34567'), [42001-240]
+2026-08-29 17:53:31.694303-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, 'Patrícia Ribeiro', 'CRM-TO 45678')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, 'Patrícia Ribeiro', 'CRM-TO 45678') [42001-240]
+2026-08-29 17:53:31.694724-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES [42001-240]
+2026-08-29 17:53:31.695128-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina',     1, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina',     1, 1), [42001-240]
+2026-08-29 17:53:31.695580-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, '2026-08-25 09:30:00', 300.00, 'Acompanhamento clínico', 2, 2),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, '2026-08-25 09:30:00', 300.00, 'Acompanhamento clínico', 2, 2), [42001-240]
+2026-08-29 17:53:31.695973-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, '2026-08-25 11:00:00', 280.00, 'Avaliação inicial',      3, 3),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, '2026-08-25 11:00:00', 280.00, 'Avaliação inicial',      3, 3), [42001-240]
+2026-08-29 17:53:31.696359-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, '2026-08-26 08:30:00', 250.00, 'Retorno médico',         4, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, '2026-08-26 08:30:00', 250.00, 'Retorno médico',         4, 1), [42001-240]
+2026-08-29 17:53:31.696747-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]5, '2026-08-26 10:00:00', 350.00, 'Consulta especializada', 5, 4),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(5, '2026-08-26 10:00:00', 350.00, 'Consulta especializada', 5, 4), [42001-240]
+2026-08-29 17:53:31.697111-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]6, '2026-08-26 14:00:00', 220.00, 'Consulta de rotina',     6, 2),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(6, '2026-08-26 14:00:00', 220.00, 'Consulta de rotina',     6, 2), [42001-240]
+2026-08-29 17:53:31.697481-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]7, '2026-08-27 09:00:00', 300.00, 'Acompanhamento clínico', 1, 3),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(7, '2026-08-27 09:00:00', 300.00, 'Acompanhamento clínico', 1, 3), [42001-240]
+2026-08-29 17:53:31.697853-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]8, '2026-08-27 10:30:00', 250.00, 'Retorno médico',         2, 4),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(8, '2026-08-27 10:30:00', 250.00, 'Retorno médico',         2, 4), [42001-240]
+2026-08-29 17:53:31.698220-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames',    3, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames',    3, 1), [42001-240]
+2026-08-29 17:53:31.698612-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 3)"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 3) [42001-240]
+2026-08-29 17:53:50.393054-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO paciente (id, nome, telefone) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO paciente (id, nome, telefone) VALUES [42001-240]
+2026-08-29 17:53:50.397119-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, 'Ana Beatriz Souza', '(63) 99912-3456'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, 'Ana Beatriz Souza', '(63) 99912-3456'), [42001-240]
+2026-08-29 17:53:50.397927-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, 'Carlos Henrique Lima', '(63) 99876-5432'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, 'Carlos Henrique Lima', '(63) 99876-5432'), [42001-240]
+2026-08-29 17:53:50.398765-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, 'Mariana Oliveira Costa', '(63) 99123-4567'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, 'Mariana Oliveira Costa', '(63) 99123-4567'), [42001-240]
+2026-08-29 17:53:50.399401-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, 'João Pedro Martins', '(63) 99234-5678'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, 'João Pedro Martins', '(63) 99234-5678'), [42001-240]
+2026-08-29 17:53:50.400057-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]5, 'Fernanda Alves Rocha', '(63) 99345-6789'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(5, 'Fernanda Alves Rocha', '(63) 99345-6789'), [42001-240]
+2026-08-29 17:53:50.400680-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]6, 'Lucas Gabriel Santos', '(63) 99456-7890')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(6, 'Lucas Gabriel Santos', '(63) 99456-7890') [42001-240]
+2026-08-29 17:53:50.401244-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO medico (id, nome, crm) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO medico (id, nome, crm) VALUES [42001-240]
+2026-08-29 17:53:50.401836-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, 'Roberto Almeida', 'CRM-TO 12345'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, 'Roberto Almeida', 'CRM-TO 12345'), [42001-240]
+2026-08-29 17:53:50.402425-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, 'Juliana Mendes', 'CRM-TO 23456'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, 'Juliana Mendes', 'CRM-TO 23456'), [42001-240]
+2026-08-29 17:53:50.402976-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, 'Marcos Vinicius Ferreira', 'CRM-TO 34567'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, 'Marcos Vinicius Ferreira', 'CRM-TO 34567'), [42001-240]
+2026-08-29 17:53:50.403519-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, 'Patrícia Ribeiro', 'CRM-TO 45678')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, 'Patrícia Ribeiro', 'CRM-TO 45678') [42001-240]
+2026-08-29 17:53:50.404076-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES [42001-240]
+2026-08-29 17:53:50.404830-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina',     1, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina',     1, 1), [42001-240]
+2026-08-29 17:53:50.405376-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, '2026-08-25 09:30:00', 300.00, 'Acompanhamento clínico', 2, 2),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, '2026-08-25 09:30:00', 300.00, 'Acompanhamento clínico', 2, 2), [42001-240]
+2026-08-29 17:53:50.405934-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, '2026-08-25 11:00:00', 280.00, 'Avaliação inicial',      3, 3),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, '2026-08-25 11:00:00', 280.00, 'Avaliação inicial',      3, 3), [42001-240]
+2026-08-29 17:53:50.406455-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, '2026-08-26 08:30:00', 250.00, 'Retorno médico',         4, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, '2026-08-26 08:30:00', 250.00, 'Retorno médico',         4, 1), [42001-240]
+2026-08-29 17:53:50.406958-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]5, '2026-08-26 10:00:00', 350.00, 'Consulta especializada', 5, 4),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(5, '2026-08-26 10:00:00', 350.00, 'Consulta especializada', 5, 4), [42001-240]
+2026-08-29 17:53:50.407507-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]6, '2026-08-26 14:00:00', 220.00, 'Consulta de rotina',     6, 2),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(6, '2026-08-26 14:00:00', 220.00, 'Consulta de rotina',     6, 2), [42001-240]
+2026-08-29 17:53:50.407993-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]7, '2026-08-27 09:00:00', 300.00, 'Acompanhamento clínico', 1, 3),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(7, '2026-08-27 09:00:00', 300.00, 'Acompanhamento clínico', 1, 3), [42001-240]
+2026-08-29 17:53:50.408488-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]8, '2026-08-27 10:30:00', 250.00, 'Retorno médico',         2, 4),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(8, '2026-08-27 10:30:00', 250.00, 'Retorno médico',         2, 4), [42001-240]
+2026-08-29 17:53:50.408979-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames',    3, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames',    3, 1), [42001-240]
+2026-08-29 17:53:50.409496-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 3)"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 3) [42001-240]
+2026-08-29 17:55:04.419442-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO paciente (id, nome, telefone) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO paciente (id, nome, telefone) VALUES [42001-240]
+2026-08-29 17:55:04.421893-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, 'Ana Beatriz Souza', '(63) 99912-3456'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, 'Ana Beatriz Souza', '(63) 99912-3456'), [42001-240]
+2026-08-29 17:55:04.422498-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, 'Carlos Henrique Lima', '(63) 99876-5432'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, 'Carlos Henrique Lima', '(63) 99876-5432'), [42001-240]
+2026-08-29 17:55:04.423010-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, 'Mariana Oliveira Costa', '(63) 99123-4567'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, 'Mariana Oliveira Costa', '(63) 99123-4567'), [42001-240]
+2026-08-29 17:55:04.423500-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, 'João Pedro Martins', '(63) 99234-5678'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, 'João Pedro Martins', '(63) 99234-5678'), [42001-240]
+2026-08-29 17:55:04.424027-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]5, 'Fernanda Alves Rocha', '(63) 99345-6789'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(5, 'Fernanda Alves Rocha', '(63) 99345-6789'), [42001-240]
+2026-08-29 17:55:04.424542-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]6, 'Lucas Gabriel Santos', '(63) 99456-7890')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(6, 'Lucas Gabriel Santos', '(63) 99456-7890') [42001-240]
+2026-08-29 17:55:04.425065-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO medico (id, nome, crm) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO medico (id, nome, crm) VALUES [42001-240]
+2026-08-29 17:55:04.425552-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, 'Roberto Almeida', 'CRM-TO 12345'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, 'Roberto Almeida', 'CRM-TO 12345'), [42001-240]
+2026-08-29 17:55:04.426010-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, 'Juliana Mendes', 'CRM-TO 23456'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, 'Juliana Mendes', 'CRM-TO 23456'), [42001-240]
+2026-08-29 17:55:04.426500-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, 'Marcos Vinicius Ferreira', 'CRM-TO 34567'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, 'Marcos Vinicius Ferreira', 'CRM-TO 34567'), [42001-240]
+2026-08-29 17:55:04.426977-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, 'Patrícia Ribeiro', 'CRM-TO 45678')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, 'Patrícia Ribeiro', 'CRM-TO 45678') [42001-240]
+2026-08-29 17:55:04.427481-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES[*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES [42001-240]
+2026-08-29 17:55:04.427954-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina',     1, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina',     1, 1), [42001-240]
+2026-08-29 17:55:04.428449-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]2, '2026-08-25 09:30:00', 300.00, 'Acompanhamento clínico', 2, 2),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(2, '2026-08-25 09:30:00', 300.00, 'Acompanhamento clínico', 2, 2), [42001-240]
+2026-08-29 17:55:04.428904-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]3, '2026-08-25 11:00:00', 280.00, 'Avaliação inicial',      3, 3),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(3, '2026-08-25 11:00:00', 280.00, 'Avaliação inicial',      3, 3), [42001-240]
+2026-08-29 17:55:04.429392-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]4, '2026-08-26 08:30:00', 250.00, 'Retorno médico',         4, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(4, '2026-08-26 08:30:00', 250.00, 'Retorno médico',         4, 1), [42001-240]
+2026-08-29 17:55:04.429889-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]5, '2026-08-26 10:00:00', 350.00, 'Consulta especializada', 5, 4),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(5, '2026-08-26 10:00:00', 350.00, 'Consulta especializada', 5, 4), [42001-240]
+2026-08-29 17:55:04.430361-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]6, '2026-08-26 14:00:00', 220.00, 'Consulta de rotina',     6, 2),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(6, '2026-08-26 14:00:00', 220.00, 'Consulta de rotina',     6, 2), [42001-240]
+2026-08-29 17:55:04.430835-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]7, '2026-08-27 09:00:00', 300.00, 'Acompanhamento clínico', 1, 3),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(7, '2026-08-27 09:00:00', 300.00, 'Acompanhamento clínico', 1, 3), [42001-240]
+2026-08-29 17:55:04.431279-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]8, '2026-08-27 10:30:00', 250.00, 'Retorno médico',         2, 4),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(8, '2026-08-27 10:30:00', 250.00, 'Retorno médico',         2, 4), [42001-240]
+2026-08-29 17:55:04.431749-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames',    3, 1),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames',    3, 1), [42001-240]
+2026-08-29 17:55:04.432244-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "([*]10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 3)"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 3) [42001-240]
