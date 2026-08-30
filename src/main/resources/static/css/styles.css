@@ -17,7 +17,9 @@ h1 {
     margin-bottom: 24px;
 }
 
-button {
+button, input[type="submit"] {
+    width: auto;
+    min-width: 200px;
     font-family: inherit;
     font-size: 17px;
     padding: 10px 16px;
@@ -29,7 +31,17 @@ button {
     margin-bottom: 8px;
 }
 
-button:hover {
+button.secundario {
+    background-color: #ffffff;
+    color: #0f5c56;
+    border: 2px solid #0f5c56;
+}
+
+button.secundario:hover {
+    background-color: #dfeae9;
+}
+
+button:hover, input[type="submit"]:hover {
     background-color: #0b433f;
 }
 
@@ -39,6 +51,7 @@ label {
 }
 
 input, select {
+    box-sizing: border-box;
     display: block;
     width: 100%;
     max-width: 380px;
@@ -49,14 +62,6 @@ input, select {
     border: 1px solid #c4bdb4;
     border-radius: 4px;
     background-color: #ffffff;
-}
-
-input[type="submit"] {
-    width: auto;
-    background-color: #0f5c56;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
 }
 
 table {
@@ -83,6 +88,31 @@ tbody tr:nth-child(even) {
 
 td a {
     color: #0f5c56;
+}
+
+td.numero {
+    text-align: right;
+}
+
+a.editar {
+    color: #9a6700;
+}
+
+a.editar:hover {
+    color: #7a5100;
+}
+
+a.excluir {
+    color: #c0392b;
+}
+
+a.excluir:hover {
+    color: #8b2419;
+}
+
+a:focus, button:focus, input:focus, select:focus {
+    outline: 3px solid #0f5c56;
+    outline-offset: 2px;
 }
 
 .erro, .sucesso {

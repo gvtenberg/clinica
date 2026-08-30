@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +13,10 @@
         <button type="button">Cadastrar Consultas</button></a>
     &nbsp;
     <a th:href="@{/medicos/list}">
-        <button type="button">Ver Médicos</button></a>
+        <button type="button" class="secundario">Ver Médicos</button></a>
     &nbsp;
     <a th:href="@{/pacientes/list}">
-        <button type="button">Ver Pacientes</button></a>
+        <button type="button" class="secundario">Ver Pacientes</button></a>
 
     <!-- Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view -->
     <p th:if="${erro}" th:text="${erro}" class="erro"></p>
@@ -39,11 +39,12 @@
             <td th:text="${c.paciente.nome}"></td>
             <td th:text="${c.medico.nome}"></td>
             <td th:text="${c.observacao}"></td>
-            <td th:text="${c.valor}"></td>
+            <td th:text="${c.valor}" class="numero"></td>
         <!--<td> <a th:href="@{/consultas/edit/{id}(id=${c.id})}">Editar</a></td> -->
-            <td> <a th:href="|/consultas/edit/${c.id}|">Editar</a></td>
-            <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
+            <td> <a class="editar" th:href="|/consultas/edit/${c.id}|">Editar</a></td>
+            <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
         </tr>
     </table>
+    <p th:if="${#lists.isEmpty(consultas)}">Nenhuma consulta cadastrada</p>
 </body>
 </html>

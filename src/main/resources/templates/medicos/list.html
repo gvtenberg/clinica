@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +13,10 @@
         <button type="button">Cadastrar Médicos</button></a>
     &nbsp;
     <a th:href="@{/consultas/list}">
-        <button type="button">Ver Consultas</button></a>
+        <button type="button" class="secundario">Ver Consultas</button></a>
     &nbsp;
     <a th:href="@{/pacientes/list}">
-        <button type="button">Ver Pacientes</button></a>
+        <button type="button" class="secundario">Ver Pacientes</button></a>
 
     <!-- Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view -->
     <p th:if="${erro}" th:text="${erro}" class="erro"></p>
@@ -34,10 +34,11 @@
             <td th:text="${m.nome}"></td>
             <td th:text="${m.crm}"></td>
         <!--<td> <a th:href="@{/medicos/edit/{id}(id=${m.id})}">Editar</a></td> -->
-            <td> <a th:href="|/medicos/edit/${m.id}|">Editar</a></td>
-            <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/medicos/remove/${m.id}|">Excluir</a></td>
+            <td> <a class="editar" th:href="|/medicos/edit/${m.id}|">Editar</a></td>
+            <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/medicos/remove/${m.id}|">Excluir</a></td>
             <td> <a th:href="|/consultas/medico/${m.id}|">Consultas</a></td>
         </tr>
     </table>
+    <p th:if="${#lists.isEmpty(medicos)}">Nenhum médico cadastrado</p>
 </body>
 </html>
