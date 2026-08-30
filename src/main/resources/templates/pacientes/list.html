@@ -17,6 +17,7 @@
     <a th:href="@{/medicos/list}">
         <button type="button">Ver Médicos</button></a>
 
+    <!-- Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view -->
     <p th:if="${erro}" th:text="${erro}" class="erro"></p>
     <p th:if="${sucesso}" th:text="${sucesso}" class="sucesso"></p>
 
