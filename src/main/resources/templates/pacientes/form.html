@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/mascaras.js" defer></script>
     <!--<title>Cadastro de Pacientes</title> -->
     <title th:text="${paciente.id == null} ? 'Cadastrar Paciente' : 'Editar Paciente'">Paciente</title>
 </head>
@@ -17,7 +18,7 @@
 
         <input type="hidden" th:field="*{id}">
         <label>Nome: <input type="text" th:field="*{nome}" placeholder="Nome" required></label>
-        <label>Telefone: <input type="text" th:field="*{telefone}" placeholder="Telefone" required></label>
+        <label>Telefone: <input type="text" th:field="*{telefone}" placeholder="(63) 99123-4567" pattern="\(\d{2}\) \d{4,5}-\d{4}" minlength="14" maxlength="15" required></label>
         <input type="submit" th:value="${paciente.id == null} ? 'Cadastrar Paciente' : 'Salvar Alterações'">
     </form>
 </body>

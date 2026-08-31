@@ -2,6 +2,7 @@ package br.edu.ifto.atividade3.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import java.io.Serializable;
 import java.util.List;
@@ -32,7 +33,14 @@ public class Paciente implements Serializable {
     @NotBlank(message = "O nome é obrigatório")
     private String nome;
 
+    /**
+     * O telefone precisa ser formatado da seguinte forma: dois dígitos entre parênteses, espaço,
+     * quatro ou cinco dígitos, hífen e quatro dígitos. Aceita telefone fixo, (63) 1234-5678,
+     * e celular, (63) 99123-4567
+     */
     @NotBlank(message = "O telefone é obrigatório")
+    @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}",
+            message = "O telefone deve seguir o formato (63) 99123-4567 ou (63) 1234-5678")
     private String telefone;
 
     /**
