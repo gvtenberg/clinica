@@ -2,9 +2,14 @@ package br.edu.ifto.atividade3.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CPF;
 
+/**
+ * Entidade abstrata que representa uma pessoa física, herdando os dados de contato de Pessoa e
+ * agrupando os dados pessoais (nome e CPF)
+ *
+ * @Entity indica ao JPA que a classe faz parte do mapeamento de entidades da hierarquia do banco de dados
+ */
 @Entity
 public abstract class PessoaFisica extends Pessoa {
     /**

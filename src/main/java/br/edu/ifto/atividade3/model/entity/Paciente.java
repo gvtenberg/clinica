@@ -1,8 +1,6 @@
 package br.edu.ifto.atividade3.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 import java.io.Serializable;
 import java.util.List;

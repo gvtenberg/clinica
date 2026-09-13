@@ -1,10 +1,16 @@
 package br.edu.ifto.atividade3.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CNPJ;
 
+/**
+ * Entidade que representa uma pessoa jurídica, herdando os dados de contato de Pessoa e definindo
+ * os dados empresariais (razão social e CNPJ)
+ *
+ * @Entity indica ao JPA que a classe deve ser mapeada para uma tabela do banco de dados
+ */
 @Entity
 public class PessoaJuridica extends Pessoa {
     /**

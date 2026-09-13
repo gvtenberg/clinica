@@ -5,6 +5,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+/**
+ * Entidade abstrata base que representa uma pessoa no sistema, agrupando os dados de contato comuns de PessoaFisica e PessoaJuridica
+ *
+ * @Entity indica ao JPA que a classe faz parte do mapeamento de entidades do banco de dados
+ * @Inheritance define a estratégia de herança utilizada para o mapeamento da hierarquia no banco de dados
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Pessoa {
