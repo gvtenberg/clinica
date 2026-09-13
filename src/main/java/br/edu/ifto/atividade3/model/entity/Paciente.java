@@ -15,34 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "paciente")
-public class Paciente implements Serializable {
-    /**
-     * @Id define o atributo como chave primária da entidade
-     * @GeneratedValue com estratégia IDENTITY delega ao banco de dados a geração do valor,
-     * por meio de coluna autoincremento
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    /**
-     * É utilizada a anotação @NotBlank, e não @NotNull, porque um campo de texto enviado em branco
-     * produz uma string vazia, e não um valor nulo. A anotação @NotNull consideraria essa string
-     * válida e permitiria a gravação do registro sem conteúdo
-     */
-    @NotBlank(message = "O nome é obrigatório")
-    private String nome;
-
-    /**
-     * O telefone precisa ser formatado da seguinte forma: dois dígitos entre parênteses, espaço,
-     * quatro ou cinco dígitos, hífen e quatro dígitos. Aceita telefone fixo, (63) 1234-5678,
-     * e celular, (63) 99123-4567
-     */
-    @NotBlank(message = "O telefone é obrigatório")
-    @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}",
-            message = "O telefone deve seguir o formato (63) 99123-4567 ou (63) 1234-5678")
-    private String telefone;
-
+public class Paciente extends PessoaFisica implements Serializable {
     /**
      * @OneToMany representa a multiplicidade 1 - 0..* do diagrama de classes: um paciente
      * pode possuir várias consultas.
@@ -61,7 +34,7 @@ public class Paciente implements Serializable {
      * Método previsto no diagrama de classes da atividade, mas sem uso nesta primeira versão
      */
     public String dados(){
-        return nome + " - " + telefone;
+        return getNome() + " - " + getTelefone();
     }
 
     /**
@@ -72,37 +45,13 @@ public class Paciente implements Serializable {
      */
     public String consultas(){
         if(consultas == null || consultas.isEmpty())
-            return "O paciente " + nome + " não possui consultas cadastradas";
+            return "O paciente " + getNome() + " não possui consultas cadastradas";
 
         StringBuilder sb = new StringBuilder();
         for(Consulta c : consultas)
             sb.append(c.dados()).append("\n");
 
         return sb.toString();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
     }
 
     public List<Consulta> getConsultas() {

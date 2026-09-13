@@ -14,24 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "medico")
-public class Medico implements Serializable {
-    /**
-     * @Id define o atributo como chave primária da entidade
-     * @GeneratedValue com estratégia IDENTITY delega ao banco de dados a geração do valor,
-     * por meio de coluna autoincremento
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    /**
-     * É utilizada a anotação @NotBlank, e não @NotNull, porque um campo de texto enviado em branco
-     * produz uma string vazia, e não um valor nulo. A anotação @NotNull consideraria essa string
-     * válida e permitiria a gravação do registro sem conteúdo
-     */
-    @NotBlank(message = "O nome é obrigatório")
-    private String nome;
-
+public class Medico extends PessoaFisica implements Serializable {
     @NotBlank(message = "O CRM é obrigatório")
     private String crm;
 
@@ -53,7 +36,7 @@ public class Medico implements Serializable {
      * Método previsto no diagrama de classes da atividade, mas sem uso nesta primeira versão
      */
     public String dados(){
-        return nome + " - CRM: " + crm;
+        return getNome() + " - CRM: " + crm;
     }
 
     /**
@@ -64,29 +47,13 @@ public class Medico implements Serializable {
      */
     public String consultas(){
         if(consultas == null || consultas.isEmpty())
-            return "O médico " + nome + " não possui consultas cadastradas";
+            return "O médico " + getNome() + " não possui consultas cadastradas";
 
         StringBuilder sb = new StringBuilder();
         for(Consulta c : consultas)
             sb.append(c.dados()).append("\n");
 
         return sb.toString();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getCrm() {

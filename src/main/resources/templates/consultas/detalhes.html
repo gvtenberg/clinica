@@ -20,7 +20,6 @@
         </tr>
         </thead>
         <tr th:each="c : ${consultas}">
-            <!--<td th:text="${c.data}"></td>-->
             <td th:text="${#temporals.format(c.data, 'dd/MMM/yyyy ''às'' HH:mm')}"></td> <!-- 25/Ago/2026 às 19:30 -->
             <td th:text="${paciente == null ? c.paciente.nome : c.medico.nome}"></td>
             <td th:text="${c.observacao}"></td>

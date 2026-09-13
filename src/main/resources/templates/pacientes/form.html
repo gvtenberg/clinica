@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
     <script src="/js/mascaras.js" defer></script>
-    <!--<title>Cadastro de Pacientes</title> -->
     <title th:text="${paciente.id == null} ? 'Cadastrar Paciente' : 'Editar Paciente'">Paciente</title>
 </head>
 <body>
@@ -17,8 +16,10 @@
         </div>
 
         <input type="hidden" th:field="*{id}">
-        <label>Nome: <input type="text" th:field="*{nome}" placeholder="Nome" required></label>
-        <label>Telefone: <input type="text" th:field="*{telefone}" placeholder="(63) 99123-4567" pattern="\(\d{2}\) \d{4,5}-\d{4}" minlength="14" maxlength="15" required></label>
+        <label>Nome: <input type="text" th:field="*{nome}" placeholder="Fulano da Silva" required></label>
+        <label>CPF: <input type="text" th:field="*{cpf}" placeholder="123.456.789-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" minlength="14" maxlength="14" title="Formato esperado: 123.456.789-00" required></label>
+        <label>E-mail: <input type="email" th:field="*{email}" placeholder="nome@dominio.com" title="Formato esperado: nome@dominio.com" required></label>
+        <label>Telefone: <input type="text" th:field="*{telefone}" placeholder="(63) 91234-5678" pattern="\(\d{2}\) \d{4,5}-\d{4}" minlength="14" maxlength="15" required></label>
         <input type="submit" th:value="${paciente.id == null} ? 'Cadastrar Paciente' : 'Salvar Alterações'">
     </form>
 </body>

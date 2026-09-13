@@ -31,13 +31,11 @@
        </tr>
        </thead>
        <tr th:each="c : ${consultas}">
-           <!--<td th:text="${c.data}"></td>-->
             <td th:text="${#temporals.format(c.data, 'dd/MMM/yyyy ''às'' HH:mm')}"></td> <!-- 25/Ago/2026 às 19:30 -->
-            <td th:text="${c.paciente.nome}"></td>
-            <td th:text="${c.medico.nome}"></td>
+            <td th:text="${c.paciente.nome}"></td> <!-- <a th:href="|/consultas/paciente/${p.id}|">Consultas</a> -->
+            <td th:text="${c.medico.nome}"></td> <!-- <a th:href="|/consultas/medico/${m.id}|">Consultas</a> -->
             <td th:text="${c.observacao}"></td>
             <td th:text="${c.valor}" class="numero"></td>
-        <!--<td> <a th:href="@{/consultas/edit/{id}(id=${c.id})}">Editar</a></td> -->
             <td> <a class="editar" th:href="|/consultas/edit/${c.id}|">Editar</a></td>
             <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
         </tr>

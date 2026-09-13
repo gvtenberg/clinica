@@ -71,11 +71,12 @@ public class MedicoController {
      * Em caso de erro, o formulário é renderizado na própria resposta do POST, preservando os dados digitados
      */
     @PostMapping("/save")
-    public ModelAndView save(@Valid Medico medico, BindingResult result, ModelMap model) {
+    public ModelAndView save(@Valid Medico medico, BindingResult result, ModelMap model, RedirectAttributes attributes) {
         if(result.hasErrors())
             return new ModelAndView("medicos/form", model); // Retorna ao formulário com os dados preenchidos
 
         medicoRepository.salvar(medico);
+        attributes.addFlashAttribute("sucesso", "Médico(a) '" + medico.getNome() + "' cadastrado(a) com sucesso!");
         return new ModelAndView("redirect:/medicos/list");
     }
 
@@ -89,11 +90,12 @@ public class MedicoController {
      * O repositório utiliza merge, pois o objeto recebido do formulário está desanexado do contexto de persistência
      */
     @PostMapping("/update")
-    public ModelAndView update(@Valid Medico medico, BindingResult result, ModelMap model) {
+    public ModelAndView update(@Valid Medico medico, BindingResult result, ModelMap model, RedirectAttributes attributes) {
         if(result.hasErrors())
             return new ModelAndView("medicos/form", model);
 
         medicoRepository.update(medico);
+        attributes.addFlashAttribute("sucesso", "Dados do(a) Médico(a) '" + medico.getNome() + "' atualizados com sucesso");
         return new ModelAndView("redirect:/medicos/list");
     }
 
@@ -110,11 +112,11 @@ public class MedicoController {
     @GetMapping("/remove/{id}") // Por que não usar DeleteMapping?
     public ModelAndView remove(@PathVariable("id") Long id, RedirectAttributes attributes) {
         if(!medicoRepository.buscarConsultas(id).isEmpty()){ // Para evitar erro de ConstraintViolationException quando existe consulta com o médico a ser excluído
-            attributes.addFlashAttribute("erro", "Médico possui consultas e não pode ser excluído");
+            attributes.addFlashAttribute("erro", "Médico(a) '" + medicoRepository.buscarPorId(id).getNome() + "' possui consultas e não pode ser excluído(a)");
         } else if(medicoRepository.remover(id))
-            attributes.addFlashAttribute("sucesso", "Médico removido com sucesso");
+            attributes.addFlashAttribute("sucesso", "Médico(a) com id = " + id + " removido(a) com sucesso");
         else
-            attributes.addFlashAttribute("erro", "Erro ao remover o médico");
+            attributes.addFlashAttribute("erro", "Erro ao remover o médico com id = " + id);
 
         return new ModelAndView("redirect:/medicos/list");
     }

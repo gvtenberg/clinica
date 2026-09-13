@@ -23,14 +23,17 @@
         <thead>
         <tr>
             <th>Nome</th>
+            <th>CPF</th>
+            <th>E-mail</th>
             <th>Telefone</th>
             <th colspan="3">Ações</th>
         </tr>
         </thead>
         <tr th:each="p : ${pacientes}">
             <td th:text="${p.nome}"></td>
+            <td th:text="${p.cpf}"></td>
+            <td th:text="${p.email}"></td>
             <td th:text="${p.telefone}"></td>
-        <!--<td> <a th:href="@{/pacientes/edit/{id}(id=${p.id})}">Editar</a></td> -->
             <td> <a class="editar" th:href="|/pacientes/edit/${p.id}|">Editar</a></td>
             <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/pacientes/remove/${p.id}|">Excluir</a></td>
             <td> <a th:href="|/consultas/paciente/${p.id}|">Consultas</a></td>

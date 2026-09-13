@@ -99,7 +99,7 @@ public class ConsultaController {
         }
 
         consultaRepository.salvar(consulta);
-        attributes.addFlashAttribute("sucesso", "Consulta cadastrada com sucesso!");
+        attributes.addFlashAttribute("sucesso", "Consulta do(a) Paciente '" + pacienteRepository.buscarPorId(consulta.getPaciente().getId()).getNome() + "' cadastrada com sucesso!");
         return new ModelAndView("redirect:/consultas/list");
     }
 
@@ -124,7 +124,7 @@ public class ConsultaController {
         }
 
         consultaRepository.update(consulta);
-        attributes.addFlashAttribute("sucesso", "Consulta atualizada com sucesso");
+        attributes.addFlashAttribute("sucesso", "Consulta do(a) Paciente '" + pacienteRepository.buscarPorId(consulta.getPaciente().getId()).getNome() + "' atualizada com sucesso");
         return new ModelAndView("redirect:/consultas/list");
     }
 
@@ -140,9 +140,9 @@ public class ConsultaController {
     @GetMapping("/remove/{id}") // Por que não usar DeleteMapping?
     public ModelAndView remove(@PathVariable("id") Long id, RedirectAttributes attributes) {
         if(consultaRepository.remover(id))
-            attributes.addFlashAttribute("sucesso", "Consulta removida com sucesso");
+            attributes.addFlashAttribute("sucesso", "Consulta com id = " + id + " removida com sucesso");
         else
-            attributes.addFlashAttribute("erro", "Erro ao remover consulta");
+            attributes.addFlashAttribute("erro", "Erro ao remover consulta com id = " + id);
 
         return new ModelAndView("redirect:/consultas/list");
     }
