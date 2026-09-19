@@ -1,4 +1,4 @@
-package br.edu.ifto.atividade3.model.entity;
+package br.edu.ifto.clinica.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;

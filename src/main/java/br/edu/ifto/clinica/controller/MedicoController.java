@@ -1,7 +1,7 @@
-package br.edu.ifto.atividade3.controller;
+package br.edu.ifto.clinica.controller;
 
-import br.edu.ifto.atividade3.model.entity.Medico;
-import br.edu.ifto.atividade3.model.repository.MedicoRepository;
+import br.edu.ifto.clinica.model.entity.Medico;
+import br.edu.ifto.clinica.model.repository.MedicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

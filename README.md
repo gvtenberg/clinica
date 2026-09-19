@@ -89,7 +89,7 @@ A entidade `Consulta` é o lado dono das duas associações, ou seja, é na tabe
 ## Estrutura do projeto
 
 ```
-src/main/java/br/edu/ifto/atividade3/
+src/main/java/br/edu/ifto/clinica/
 ├── controller/          # Recebe as requisições e define as views
 ├── model/
 │   ├── entity/          # Entidades JPA (Pessoa, PessoaFisica, PessoaJuridica,
