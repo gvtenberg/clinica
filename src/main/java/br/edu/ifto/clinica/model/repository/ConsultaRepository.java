@@ -1,6 +1,6 @@
-package br.edu.ifto.atividade3.model.repository;
+package br.edu.ifto.clinica.model.repository;
 
-import br.edu.ifto.atividade3.model.entity.Consulta;
+import br.edu.ifto.clinica.model.entity.Consulta;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;

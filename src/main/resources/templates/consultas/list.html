@@ -21,14 +21,14 @@
 
    <table>
        <thead>
-       <tr>
-           <th>Data e Hora</th>
-           <th>Paciente</th>
-           <th>Médico</th>
-           <th>Observação</th>
-           <th>Valor</th>
-           <th colspan="2">Ações</th>
-       </tr>
+           <tr>
+               <th>Data e Hora</th>
+               <th>Paciente</th>
+               <th>Médico</th>
+               <th>Observação</th>
+               <th>Valor</th>
+               <th colspan="2">Ações</th>
+           </tr>
        </thead>
        <tr th:each="c : ${consultas}">
             <td th:text="${#temporals.format(c.data, 'dd/MMM/yyyy ''às'' HH:mm')}"></td> <!-- 25/Ago/2026 às 19:30 -->

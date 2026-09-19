@@ -9,11 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.edu.ifto</groupId>
-    <artifactId>atividade3</artifactId>
+    <artifactId>clinica</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>atividade3</name>
-    <description>atividade3</description>
+    <name>clinica</name>
+    <description>clinica</description>
     <url/>
     <licenses>
         <license/>

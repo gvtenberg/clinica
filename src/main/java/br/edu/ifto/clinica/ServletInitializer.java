@@ -1,4 +1,4 @@
-package br.edu.ifto.atividade3;
+package br.edu.ifto.clinica;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -7,7 +7,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(Atividade3Application.class);
+        return application.sources(ClinicaApplication.class);
     }
 
 }
