@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
-    <title>Pacientes Cadastrados</title>
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+<head th:replace="~{fragments/head :: head(~{::link})}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <!--/* <title>Pacientes Cadastrados</title> */-->
 </head>
 <body>
+<main>
     <h1>Pacientes Cadastrados</h1>
 
     <a class="botao" th:href="@{/pacientes/form}">Cadastrar Pacientes</a>
@@ -15,7 +14,7 @@
     &nbsp;
     <a class="botao secundario" th:href="@{/medicos/list}">Ver Médicos</a>
 
-    <!-- Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view -->
+    <!--/* Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view */-->
     <p th:if="${erro}" th:text="${erro}" class="erro"></p>
     <p th:if="${sucesso}" th:text="${sucesso}" class="sucesso"></p>
 
@@ -40,5 +39,6 @@
         </tr>
     </table>
     <p th:if="${#lists.isEmpty(pacientes)}">Nenhum paciente cadastrado</p>
+</main>
 </body>
 </html>
