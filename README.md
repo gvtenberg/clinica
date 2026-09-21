@@ -1,4 +1,4 @@
-# Atividade 4 — Sistema de Clínica com Spring Boot, JPA e Herança
+# Atividade 5 — Sistema de Clínica com Spring Boot, JPA, Herança e Fragmentos HTML
 
 Projeto desenvolvido para a disciplina de Programação Web II do curso de
 Sistemas para Internet do IFTO - _Campus_ Palmas.

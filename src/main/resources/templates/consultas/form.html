@@ -3,29 +3,48 @@
 <head th:replace="~{fragments/head :: head((${consulta.id == null} ? 'Cadastrar Consulta' : 'Editar Consulta'))}"></head>
 
 <body>
-<main>
+<main class="container">
     <h1 th:text="${consulta.id == null} ? 'Cadastrar Consulta' : 'Editar Consulta'"></h1>
 
     <form th:action="${consulta.id == null} ? @{/consultas/save} : @{/consultas/update}" th:object="${consulta}" method="post">
-        <div th:if="${#fields.hasAnyErrors()}" class="erro"> <!--/* Exibe as mensagens de erro cadastradas nos atributos da Entidade */-->
+        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger"> <!--/* Exibe as mensagens de erro cadastradas nos atributos da Entidade */-->
             <p th:each="erro : ${#fields.allErrors()}" th:text="${erro}"></p>
         </div>
 
         <input type="hidden" th:field="*{id}">
-        <label>Data: <input type="datetime-local" th:field="*{data}" placeholder="Data" required></label> <!--/* Não precisa de th:value, pois th:field já gera id, name e value */-->
-        <label>Médico: <select th:field="*{medico.id}" required>
+
+        <div class="mb-3">
+            <label class="form-label" for="data">Data:</label>
+            <input class="form-control" id="data" type="datetime-local" th:field="*{data}" placeholder="Data" required><!--/* Não precisa de th:value, pois th:field já gera id, name e value */-->
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="lista-medicos">Médico:</label>
+            <select class="form-select" id="lista-medicos" th:field="*{medico.id}" required>
                 <option value="" hidden>Selecione um médico...</option>
                 <option th:each="m : ${medicos}" th:value="${m.id}" th:text="${m.nome}"></option>
             </select>
-        </label>
-        <label>Paciente: <select th:field="*{paciente.id}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="lista-pacientes">Paciente:</label>
+            <select class="form-select" id="lista-pacientes" th:field="*{paciente.id}" required>
                 <option value="" hidden>Selecione um paciente...</option>
                 <option th:each="p : ${pacientes}" th:value="${p.id}" th:text="${p.nome}"></option>
             </select>
-        </label>
-        <label>Observação: <input type="text" th:field="*{observacao}" placeholder="Observação"></label>
-        <label>Valor: <input type="number" step="0.01" th:field="*{valor}" placeholder="Valor" required></label>
-        <input type="submit" th:value="${consulta.id == null} ? 'Cadastrar Consulta' : 'Salvar Alterações'">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="observacao">Observação:</label>
+            <input class="form-control" id="observacao" type="text" th:field="*{observacao}" placeholder="Observação">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="valor">Valor:</label>
+            <input class="form-control" id="valor" type="number" step="0.01" th:field="*{valor}" placeholder="Valor" required>
+        </div>
+
+        <button class="btn btn-primary" type="submit" th:text="${consulta.id == null} ? 'Cadastrar Consulta' : 'Salvar Alterações'">Enviar</button>
     </form>
 </main>
 </body>

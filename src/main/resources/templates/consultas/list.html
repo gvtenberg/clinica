@@ -3,40 +3,42 @@
 <head th:replace="~{fragments/head :: head('Consultas Cadastradas')}"></head>
 
 <body>
-<main>
+<main class="container">
     <h1>Consultas Cadastradas</h1>
 
-    <a class="botao" th:href="@{/consultas/form}">Cadastrar Consultas</a>
+    <a class="btn btn-primary" th:href="@{/consultas/form}">Cadastrar Consultas</a>
     &nbsp;
-    <a class="botao secundario" th:href="@{/medicos/list}">Ver Médicos</a>
+    <a class="btn btn-outline-primary" th:href="@{/medicos/list}">Ver Médicos</a>
     &nbsp;
-    <a class="botao secundario" th:href="@{/pacientes/list}">Ver Pacientes</a>
+    <a class="btn btn-outline-primary" th:href="@{/pacientes/list}">Ver Pacientes</a>
 
     <!--/* Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view */-->
-    <p th:if="${erro}" th:text="${erro}" class="erro"></p>
-    <p th:if="${sucesso}" th:text="${sucesso}" class="sucesso"></p>
+    <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
+    <p th:if="${sucesso}" th:text="${sucesso}" class="alert alert-success"></p>
 
-   <table>
-       <thead>
-           <tr>
-               <th>Data e Hora</th>
-               <th>Paciente</th>
-               <th>Médico</th>
-               <th>Observação</th>
-               <th>Valor</th>
-               <th colspan="2">Ações</th>
-           </tr>
-       </thead>
-       <tr th:each="c : ${consultas}">
-            <td th:text="${#temporals.format(c.data, 'dd/MMM/yyyy ''às'' HH:mm')}"></td> <!-- 25/Ago/2026 às 19:30 -->
-            <td> <a th:href="|/consultas/paciente/${c.paciente.id}|" th:text="${c.paciente.nome}" th:alt-title="'Ver Consultas do(a) Paciente \'' + ${c.paciente.nome} + '\''"></a></td>
-            <td> <a th:href="|/consultas/medico/${c.medico.id}|" th:text="${c.medico.nome}" th:alt-title="'Ver Consultas do(a) Médico(a) \'' + ${c.medico.nome} + '\''"></a></td>
-            <td th:text="${c.observacao}"></td>
-            <td th:text="${c.valor}" class="numero"></td>
-            <td> <a class="editar" th:href="|/consultas/edit/${c.id}|">Editar</a></td>
-            <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
-        </tr>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Data e Hora</th>
+                    <th>Paciente</th>
+                    <th>Médico</th>
+                    <th>Observação</th>
+                    <th>Valor</th>
+                    <th colspan="2">Ações</th>
+                </tr>
+            </thead>
+            <tr th:each="c : ${consultas}">
+                <td th:text="${#temporals.format(c.data, 'dd/MMM/yyyy ''às'' HH:mm')}"></td> <!-- 25/Ago/2026 às 19:30 -->
+                <td> <a th:href="|/consultas/paciente/${c.paciente.id}|" th:text="${c.paciente.nome}" th:alt-title="'Ver Consultas do(a) Paciente \'' + ${c.paciente.nome} + '\''"></a></td>
+                <td> <a th:href="|/consultas/medico/${c.medico.id}|" th:text="${c.medico.nome}" th:alt-title="'Ver Consultas do(a) Médico(a) \'' + ${c.medico.nome} + '\''"></a></td>
+                <td th:text="${c.observacao}"></td>
+                <td th:text="${c.valor}" class="numero"></td>
+                <td> <a class="editar" th:href="|/consultas/edit/${c.id}|">Editar</a></td>
+                <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
+            </tr>
+        </table>
+    </div>
     <p th:if="${#lists.isEmpty(consultas)}">Nenhuma consulta cadastrada</p>
 </main>
 </body>

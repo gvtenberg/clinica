@@ -3,41 +3,43 @@
 <head th:replace="~{fragments/head :: head('Médicos Cadastrados')}"></head>
 
 <body>
-<main>
+<main class="container">
     <h1>Médicos Cadastrados</h1>
 
-    <a class="botao" th:href="@{/medicos/form}">Cadastrar Médicos</a>
+    <a class="btn btn-primary" th:href="@{/medicos/form}">Cadastrar Médicos</a>
     &nbsp;
-    <a class="botao secundario" th:href="@{/consultas/list}">Ver Consultas</a>
+    <a class="btn btn-outline-primary" th:href="@{/consultas/list}">Ver Consultas</a>
     &nbsp;
-    <a class="botao secundario" th:href="@{/pacientes/list}">Ver Pacientes</a>
+    <a class="btn btn-outline-primary" th:href="@{/pacientes/list}">Ver Pacientes</a>
 
     <!--/* Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view */-->
-    <p th:if="${erro}" th:text="${erro}" class="erro"></p>
-    <p th:if="${sucesso}" th:text="${sucesso}" class="sucesso"></p>
+    <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
+    <p th:if="${sucesso}" th:text="${sucesso}" class="alert alert-success"></p>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>CRM</th>
-                <th>Telefone</th>
-                <th>E-mail</th>
-                <th colspan="3">Ações</th>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>CRM</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th colspan="3">Ações</th>
+                </tr>
+            </thead>
+            <tr th:each="m : ${medicos}">
+                <td th:text="${m.nome}"></td>
+                <td th:text="${m.cpf}"></td>
+                <td th:text="${m.crm}"></td>
+                <td th:text="${m.telefone}"></td>
+                <td th:text="${m.email}"></td>
+                <td> <a class="editar" th:href="|/medicos/edit/${m.id}|">Editar</a></td>
+                <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/medicos/remove/${m.id}|">Excluir</a></td>
+                <td> <a th:href="|/consultas/medico/${m.id}|">Consultas</a></td>
             </tr>
-        </thead>
-        <tr th:each="m : ${medicos}">
-            <td th:text="${m.nome}"></td>
-            <td th:text="${m.cpf}"></td>
-            <td th:text="${m.crm}"></td>
-            <td th:text="${m.telefone}"></td>
-            <td th:text="${m.email}"></td>
-            <td> <a class="editar" th:href="|/medicos/edit/${m.id}|">Editar</a></td>
-            <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/medicos/remove/${m.id}|">Excluir</a></td>
-            <td> <a th:href="|/consultas/medico/${m.id}|">Consultas</a></td>
-        </tr>
-    </table>
+        </table>
+    </div>
     <p th:if="${#lists.isEmpty(medicos)}">Nenhum médico cadastrado</p>
 </main>
 </body>
