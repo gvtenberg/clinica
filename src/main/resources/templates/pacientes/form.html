@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-
 <html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
 
-<head th:replace="~{fragments/head :: head(~{::link})}">
-    <link rel="stylesheet" href="/css/styles.css">
-    <!--/* <script src="/js/mascaras.js" defer></script>
-    <title th:text="${paciente.id == null} ? 'Cadastrar Paciente' : 'Editar Paciente'">Paciente</title> */-->
-</head>
+<head th:replace="~{fragments/head :: head(${paciente.id == null} ? 'Cadastrar Paciente' : 'Editar Paciente')}"></head>
 
 <body>
 <main>

@@ -1,9 +1,7 @@
-<!DOCTYPE html>
 <html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
-<head th:replace="~{fragments/head :: head(~{::link})}">
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <!--/* <title>Consultas Cadastradas</title> */-->
-</head>
+
+<head th:replace="~{fragments/head :: head('Consultas Cadastradas')}"></head>
+
 <body>
 <main>
     <h1>Consultas Cadastradas</h1>

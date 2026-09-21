@@ -1,9 +1,7 @@
-<!DOCTYPE html>
 <html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
-<head th:replace="~{fragments/head :: head(~{::link})}">
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <!--/* <title>Pacientes Cadastrados</title> */-->
-</head>
+
+<head th:replace="~{fragments/head :: head('Pacientes Cadastrados')}"></head>
+
 <body>
 <main>
     <h1>Pacientes Cadastrados</h1>
