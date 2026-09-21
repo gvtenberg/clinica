@@ -3,7 +3,7 @@
 <head th:replace="~{fragments/head :: head(${paciente.id == null} ? 'Cadastrar Paciente' : 'Editar Paciente')}"></head>
 
 <body>
-<main class="container">
+<main class="container-md">
     <h1 th:text="${paciente.id == null} ? 'Cadastrar Paciente' : 'Editar Paciente'"></h1>
 
     <form th:action="${paciente.id == null} ? @{/pacientes/save} : @{/pacientes/update}" th:object="${paciente}" method="post">
@@ -13,24 +13,28 @@
 
         <input type="hidden" th:field="*{id}">
 
-        <div class="mb-3">
-            <label class="form-label" for="nome">Nome:</label>
-            <input class="form-control" id="nome" type="text" th:field="*{nome}" placeholder="Fulano da Silva" required>
+        <div class="row">
+            <div class="col-md-7 mb-3">
+                <label class="form-label" for="nome">Nome:</label>
+                <input class="form-control" id="nome" type="text" th:field="*{nome}" placeholder="Fulano da Silva" required>
+            </div>
+
+            <div class="col-md-5 mb-3">
+                <label class="form-label" for="cpf">CPF:</label>
+                <input class="form-control" id="cpf" type="text" th:field="*{cpf}" placeholder="123.456.789-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" minlength="14" maxlength="14" title="Formato esperado: 123.456.789-00" required>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label" for="cpf">CPF:</label>
-            <input class="form-control" id="cpf" type="text" th:field="*{cpf}" placeholder="123.456.789-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" minlength="14" maxlength="14" title="Formato esperado: 123.456.789-00" required>
-        </div>
+        <div class="row">
+            <div class="col-md-8 mb-3">
+                <label class="form-label" for="email">E-mail:</label>
+                <input class="form-control" id="email" type="email" th:field="*{email}" placeholder="nome@dominio.com" title="Formato esperado: nome@dominio.com" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label" for="email">E-mail:</label>
-            <input class="form-control" id="email" type="email" th:field="*{email}" placeholder="nome@dominio.com" title="Formato esperado: nome@dominio.com" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label" for="telefone">Telefone:</label>
-            <input class="form-control" id="telefone" type="text" th:field="*{telefone}" placeholder="(63) 91234-5678" pattern="\(\d{2}\) \d{4,5}-\d{4}" minlength="14" maxlength="15" required>
+            <div class="col-md-4 mb-3">
+                <label class="form-label" for="telefone">Telefone:</label>
+                <input class="form-control" id="telefone" type="text" th:field="*{telefone}" placeholder="(63) 91234-5678" pattern="\(\d{2}\) \d{4,5}-\d{4}" minlength="14" maxlength="15" required>
+            </div>
         </div>
 
         <input class="btn btn-primary" type="submit" th:value="${paciente.id == null} ? 'Cadastrar Paciente' : 'Salvar Alterações'">

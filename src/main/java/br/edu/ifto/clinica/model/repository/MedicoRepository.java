@@ -26,14 +26,14 @@ public class MedicoRepository {
     private EntityManager em;
 
     /**
-     * @return lista com todos os médicos cadastrados.
+     * @return lista com todos os médicos cadastrados ordenados pelo nome para facilitar o select nos forms.
      * A consulta é escrita em JPQL, linguagem que opera sobre as entidades do modelo e não
      * diretamente sobre as tabelas. O segundo argumento do método createQuery informa o tipo
      * esperado do resultado, dispensando conversão e eliminando o aviso de atribuição não verificada
      */
     public List<Medico> buscarTodos(){
         //return em.createQuery("from Medico").getResultList(); // HQL (Warning do compilador nesta linha: Unchecked assignment)
-        return em.createQuery("from Medico", Medico.class).getResultList();
+        return em.createQuery("from Medico order by nome", Medico.class).getResultList();
     }
 
     /**

@@ -1,12 +1,13 @@
 # Atividade 5 — Sistema de Clínica com Spring Boot, JPA, Herança e Fragmentos HTML
 
 Projeto desenvolvido para a disciplina de Programação Web II do curso de
-Sistemas para Internet do IFTO - _Campus_ Palmas.
+Sistemas para Internet do IFTO — _Campus_ Palmas.
 
 Aplicação web para gerenciamento de pacientes, médicos e consultas, com foco
 no mapeamento de entidades JPA, na definição de relacionamentos entre elas,
-na implementação das operações CRUD e no mapeamento de herança entre
-entidades.
+na implementação das operações CRUD, no mapeamento de herança entre
+entidades e na reorganização das páginas com fragmentos HTML do Thymeleaf,
+estilizadas com Bootstrap 5.
 
 ## Tecnologias
 
@@ -14,8 +15,48 @@ entidades.
 - Spring Boot 4.1.1 (Web MVC, Data JPA, Validation, DevTools)
 - Hibernate (implementação JPA)
 - Thymeleaf
+- Bootstrap 5.3.8 (via CDN)
 - Banco de dados H2
 - Maven
+
+## Fragmentos HTML e layout
+
+As páginas da aplicação não repetem mais cabeçalho, navbar e rodapé — cada
+uma reutiliza um conjunto de fragmentos comuns, definidos em
+`templates/fragments/`:
+
+| Fragmento | Responsabilidade |
+|---|---|
+| `layout.html` | Molde geral de toda página: recebe o `<head>` e o `<main>` como parâmetros e monta a estrutura completa em volta deles |
+| `head.html` | Metadados, título da página (recebido como parâmetro) e o CDN do Bootstrap |
+| `header.html` | Navbar, com o item do menu correspondente à seção atual destacado automaticamente |
+| `footer.html` | Rodapé e os scripts do Bootstrap e das máscaras de formulário |
+
+Cada view (`list.html`, `form.html`, `detalhes.html`) declara apenas seu
+próprio `<head>` (com o título da página) e seu `<main>` — o restante da
+estrutura vem do `layout.html`.
+
+### Navbar com item ativo dinâmico
+
+O item destacado na navbar não é fixo: a classe `NavegacaoControllerAdvice`
+identifica, a partir da URL da requisição, em qual seção da aplicação o
+usuário está (pacientes, médicos ou consultas) e disponibiliza essa
+informação para a view através do atributo `paginaAtual`. Como o Thymeleaf
+compartilha o mesmo contexto entre a página principal e os fragmentos que
+ela utiliza, esse valor fica acessível dentro de `header.html` sem precisar
+ser repassado manualmente por cada página.
+
+### Bootstrap e responsividade
+
+A interface é estilizada exclusivamente com classes do Bootstrap 5 — sem
+folha de estilos própria no momento (`static/css/styles.css` existe, mas
+não está sendo carregado). As listagens (`list.html`, `detalhes.html`) usam
+`class="container"`, ocupando toda a largura disponível para acomodar as
+colunas das tabelas; os formulários usam `class="container-md"`, que trava
+a largura máxima em telas grandes, evitando campos exageradamente largos. Os
+campos dos formulários são organizados em `row`/`col-md-*`, dispostos lado a
+lado em telas médias/grandes e empilhados em telas estreitas. A navbar
+colapsa em um menu do tipo "hambúrguer" abaixo de 992px de largura.
 
 ## Modelo de dados
 
@@ -60,8 +101,7 @@ repetidas nela. Não existem tabelas para as classes abstratas `Pessoa` e
 Como consequência dessa estratégia, o identificador é gerado por uma única
 sequência (`pessoa_seq`), compartilhada entre todas as subclasses. Isso
 garante que um paciente e um médico nunca tenham o mesmo id, mesmo estando
-em tabelas diferentes. Isso é necessário para que consultas polimórficas sobre
-`Pessoa` (quando existirem) retornem resultados consistentes.
+em tabelas diferentes.
 
 ### Relacionamentos
 
@@ -85,12 +125,16 @@ A entidade `Consulta` é o lado dono das duas associações, ou seja, é na tabe
   validação de formato para telefone, e-mail e CPF
 - Bloqueio da exclusão de pacientes e médicos que possuam consultas cadastradas
 - Máscaras de digitação para telefone e CPF nos formulários
+- Interface responsiva, reutilizando cabeçalho, navbar e rodapé por meio de
+  fragmentos HTML do Thymeleaf
 
 ## Estrutura do projeto
 
 ```
 src/main/java/br/edu/ifto/clinica/
 ├── controller/          # Recebe as requisições e define as views
+│                          Inclui o NavegacaoControllerAdvice, que expõe
+│                          a seção atual para destacar o item da navbar
 ├── model/
 │   ├── entity/          # Entidades JPA (Pessoa, PessoaFisica, PessoaJuridica,
 │   │                       Paciente, Medico, Consulta)
@@ -98,9 +142,13 @@ src/main/java/br/edu/ifto/clinica/
 └── ConfiguracaoSpringMvc.java
 
 src/main/resources/
-├── templates/           # Views Thymeleaf
+├── templates/
+│   ├── fragments/        # layout, head, header e footer, reutilizados por todas as views
+│   ├── pacientes/
+│   ├── medicos/
+│   └── consultas/
 ├── static/
-│   ├── css/              # Folha de estilos
+│   ├── css/              # Folha de estilos própria (não utilizada no momento)
 │   └── js/                # Máscaras de formatação dos formulários
 ├── import.sql            # Dados iniciais
 └── application.properties
