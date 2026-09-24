@@ -3,21 +3,34 @@
 <head th:replace="~{fragments/head :: head('Pacientes Cadastrados')}"></head>
 
 <body>
-<main class="container">
+<main class="container-md">
     <h1>Pacientes Cadastrados</h1>
 
-    <a class="btn btn-primary" th:href="@{/pacientes/form}">Cadastrar Pacientes</a>
-    &nbsp;
-    <a class="btn btn-outline-primary" th:href="@{/consultas/list}">Ver Consultas</a>
-    &nbsp;
-    <a class="btn btn-outline-primary" th:href="@{/medicos/list}">Ver Médicos</a>
+    <div class="d-flex flex-wrap mb-3 gap-3">
+        <a class="btn btn-primary" th:href="@{/pacientes/form}">Cadastrar Pacientes</a>
+<!--/*
+        <a class="btn btn-outline-primary" th:href="@{/consultas/list}">Ver Consultas</a>
+
+        <a class="btn btn-outline-primary" th:href="@{/medicos/list}">Ver Médicos</a> */-->
+    </div>
 
     <!--/* Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view */-->
-    <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
-    <p th:if="${sucesso}" th:text="${sucesso}" class="alert alert-success"></p>
+    <th:block th:if="${erro}">
+        <div class="alert alert-danger alert-dismissible fade show">
+            <th:block th:text="${erro}"></th:block>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </th:block>
+
+    <th:block th:if="${sucesso}">
+        <div class="alert alert-success alert-dismissible fade show">
+            <th:block th:text="${sucesso}"></th:block>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </th:block>
 
     <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover align-middle">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -32,13 +45,17 @@
                 <td th:text="${p.cpf}"></td>
                 <td th:text="${p.email}"></td>
                 <td th:text="${p.telefone}"></td>
-                <td> <a class="editar" th:href="|/pacientes/edit/${p.id}|">Editar</a></td>
-                <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/pacientes/remove/${p.id}|">Excluir</a></td>
-                <td> <a th:href="|/consultas/paciente/${p.id}|">Consultas</a></td>
+                <td> <a class="btn btn-sm btn-outline-editar" th:href="|/pacientes/edit/${p.id}|">Editar</a></td>
+                <td> <a class="btn btn-sm btn-outline-excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/pacientes/remove/${p.id}|">Excluir</a></td>
+                <td> <a class="btn btn-sm btn-outline-consultas" th:href="|/consultas/paciente/${p.id}|">Consultas</a></td>
             </tr>
         </table>
     </div>
     <p th:if="${#lists.isEmpty(pacientes)}">Nenhum paciente cadastrado</p>
+
+    <div class="d-flex flex-wrap mb-3 gap-3">
+        <a class="btn btn-primary" th:href="@{/pacientes/form}">Cadastrar Pacientes</a>
+    </div>
 </main>
 </body>
 </html>

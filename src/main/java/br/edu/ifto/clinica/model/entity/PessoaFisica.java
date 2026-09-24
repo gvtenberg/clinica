@@ -21,10 +21,10 @@ public abstract class PessoaFisica extends Pessoa {
     private String nome;
 
     /**
-     * O CPF precisa ser informado no formato 123.456.789-00
+     * O CPF precisa ser informado no formato 123.456.789-09
      */
     @NotBlank(message = "O CPF é obrigatório")
-    @CPF(message = "O CPF deve seguir o formato 123.456.789-00")
+    @CPF(message = "O CPF deve ser válido e deve seguir o formato 123.456.789-09")
     private String cpf;
 
     public PessoaFisica() {}

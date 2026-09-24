@@ -5,163 +5,131 @@ body {
     line-height: 1.5;
     color: #1f2937;
     background-color: #f7f5f2;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 24px 16px 48px;
+}
+
+.container-md {
+    max-width: 1140px;
 }
 
 h1 {
     font-size: 26px;
     color: #0f5c56;
     border-bottom: 3px solid #0f5c56;
-    padding-bottom: 8px;
+    padding-block: 8px;
     margin-bottom: 24px;
 }
 
-/* ===== Botões ===== */
-
-button, input[type="submit"], a.botao {
-    box-sizing: border-box;
-    display: inline-block;
-    line-height: 1.5;
-    text-align: center;
-    text-decoration: none;
-    width: auto;
-    min-width: 200px;
-    font-family: inherit;
-    font-size: 17px;
-    padding: 10px 16px;
+/* ===== Navbar ===== */
+.navbar, .navbar[data-bs-theme="dark"] {
     background-color: #0f5c56;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 8px;
+    --bs-navbar-color: rgba(255, 255, 255, 0.85);
+    --bs-navbar-hover-color: #ffffff;
+    --bs-navbar-active-color: #ffffff;
+    --bs-navbar-brand-color: #ffffff;
+    --bs-navbar-brand-hover-color: #ffffff;
 }
 
-button:hover, input[type="submit"]:hover, a.botao:hover {
+.navbar .nav-link.active {
     background-color: #0b433f;
+    border-radius: 6px;
 }
 
-a.botao.secundario, button.secundario {
-    background-color: #ffffff;
-    color: #0f5c56;
-    border: 2px solid #0f5c56;
+/* ===== Links dentro das tabelas ===== */
+td a:not(.btn) {
+    color: #062e2b;
+    text-decoration: none;
 }
 
-a.botao.secundario:hover, button.secundario:hover {
-    background-color: #dfeae9;
+td a:not(.btn):hover {
     color: #0f5c56;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
 }
 
 /* ===== Formulários ===== */
-
-label {
-    display: block;
-    margin-bottom: 16px;
+.form-control:focus, .form-select:focus {
+    border-color: #0f5c56;
+    box-shadow: 0 0 0 0.25rem rgba(15, 92, 86, 0.25);
 }
 
-input, select {
-    box-sizing: border-box;
-    display: block;
-    width: 100%;
-    max-width: 380px;
-    font-family: inherit;
-    font-size: 17px;
-    padding: 10px;
-    margin-top: 4px;
-    border: 1px solid #c4bdb4;
-    border-radius: 4px;
-    background-color: #ffffff;
+/* ===== Botões — sobrescrevendo as variáveis do Bootstrap ===== */
+.btn-primary {
+    --bs-btn-color: #ffffff;
+    --bs-btn-bg: #0f5c56;
+    --bs-btn-border-color: #0f5c56;
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #0b433f;
+    --bs-btn-hover-border-color: #0b433f;
+    --bs-btn-active-color: #ffffff;
+    --bs-btn-active-bg: #0b433f;
+    --bs-btn-active-border-color: #0b433f;
 }
 
-select {
-    cursor: pointer;
+.btn-outline-editar {
+    --bs-btn-color: #9a6700;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: #9a6700;
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #9a6700;
+    --bs-btn-hover-border-color: #9a6700;
+    --bs-btn-active-color: #ffffff;
+    --bs-btn-active-bg: #7a5100;
+    --bs-btn-active-border-color: #7a5100;
+}
+
+.btn-outline-excluir {
+    --bs-btn-color: #c0392b;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: #c0392b;
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #c0392b;
+    --bs-btn-hover-border-color: #c0392b;
+    --bs-btn-active-color: #ffffff;
+    --bs-btn-active-bg: #8b2419;
+    --bs-btn-active-border-color: #8b2419;
+}
+
+.btn-outline-consultas {
+    --bs-btn-color: #0f5c56;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: #0f5c56;
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #0f5c56;
+    --bs-btn-hover-border-color: #0f5c56;
+    --bs-btn-active-color: #ffffff;
+    --bs-btn-active-bg: #0b433f;
+    --bs-btn-active-border-color: #0b433f;
+}
+
+.btn:focus-visible {
+    box-shadow: 0 0 0 0.25rem rgba(31, 41, 55, 0.25);
 }
 
 /* ===== Tabelas ===== */
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 16px;
-    background-color: #ffffff;
+.table {
+    --bs-table-hover-bg: rgba(15, 92, 86, 0.14);
 }
 
-th, td {
-    border: 1px solid #ddd8d1;
-    padding: 10px 12px;
-    text-align: left;
-}
-
-th {
+.table thead th {
     background-color: #0f5c56;
     color: #ffffff;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f7f5f2;
-}
-
-td a {
-    color: #0f5c56;
-    text-decoration: none;
-}
-
-td a:hover {
-    color: #0b433f;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
 }
 
 td.numero {
     text-align: right;
 }
 
-a.editar {
-    color: #9a6700;
-}
-
-a.editar:hover {
-    color: #7a5100;
-}
-
-a.excluir {
-    color: #c0392b;
-}
-
-a.excluir:hover {
-    color: #8b2419;
-}
-
 /* ===== Foco ===== */
-
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
-    outline: 3px solid #0f5c56;
+    outline: 3px solid #1f2937;
     outline-offset: 2px;
 }
 
-/* ===== Mensagens ===== */
-
-.erro, .sucesso {
-    margin: 16px 0;
-    padding: 12px 16px;
-    border-left: 6px solid;
-    border-radius: 4px;
-}
-
-.erro {
-    background-color: #fdecea;
-    border-left-color: #c0392b;
-    color: #8b2419;
-}
-
-.sucesso {
-    background-color: #e8f5e9;
-    border-left-color: #2e7d32;
-    color: #1b5220;
-}
-
-.erro p {
-    margin: 4px 0;
+.navbar .nav-link:focus-visible,
+.navbar .navbar-brand:focus-visible,
+.navbar .navbar-toggler:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 0;
+    border-radius: 6px;
+    box-shadow: none;
 }

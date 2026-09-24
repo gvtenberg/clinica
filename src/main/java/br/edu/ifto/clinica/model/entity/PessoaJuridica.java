@@ -26,7 +26,7 @@ public class PessoaJuridica extends Pessoa {
      * entrou em vigor em Julho/2026: 12.ABC.345/01DE-35
      */
     @NotBlank(message = "O CNPJ é obrigatório")
-    @CNPJ(message = "O CNPJ deve seguir o formato 12.ABC.345/01DE-35") // Não testado, pois PessoaJuridica ainda não possui uso no sistema
+    @CNPJ(message = "O CNPJ deve ser válido e deve seguir o formato 12.ABC.345/01DE-35") // Não testado, pois PessoaJuridica ainda não possui uso no sistema
     private String cnpj;
 
     public PessoaJuridica() {}

@@ -7,8 +7,9 @@
     <h1 th:text="${paciente.id == null} ? 'Cadastrar Paciente' : 'Editar Paciente'"></h1>
 
     <form th:action="${paciente.id == null} ? @{/pacientes/save} : @{/pacientes/update}" th:object="${paciente}" method="post">
-        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger"> <!--/* Exibe as mensagens de erro cadastradas nos atributos da Entidade */-->
+        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger alert-dismissible fade show"> <!--/* Exibe as mensagens de erro cadastradas nos atributos da Entidade */-->
             <p th:each="erro : ${#fields.allErrors()}" th:text="${erro}"></p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
         <input type="hidden" th:field="*{id}">

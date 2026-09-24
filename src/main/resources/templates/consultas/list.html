@@ -3,21 +3,34 @@
 <head th:replace="~{fragments/head :: head('Consultas Cadastradas')}"></head>
 
 <body>
-<main class="container">
+<main class="container-md">
     <h1>Consultas Cadastradas</h1>
 
-    <a class="btn btn-primary" th:href="@{/consultas/form}">Cadastrar Consultas</a>
-    &nbsp;
-    <a class="btn btn-outline-primary" th:href="@{/medicos/list}">Ver Médicos</a>
-    &nbsp;
-    <a class="btn btn-outline-primary" th:href="@{/pacientes/list}">Ver Pacientes</a>
+    <div class="d-flex flex-wrap mb-3 gap-3">
+        <a class="btn btn-primary" th:href="@{/consultas/form}">Cadastrar Consultas</a>
+<!--/*
+        <a class="btn btn-outline-primary" th:href="@{/medicos/list}">Ver Médicos</a>
+
+        <a class="btn btn-outline-primary" th:href="@{/pacientes/list}">Ver Pacientes</a> */-->
+    </div>
 
     <!--/* Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view */-->
-    <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
-    <p th:if="${sucesso}" th:text="${sucesso}" class="alert alert-success"></p>
+    <th:block th:if="${erro}">
+        <div class="alert alert-danger alert-dismissible fade show">
+            <th:block th:text="${erro}"></th:block>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </th:block>
+
+    <th:block th:if="${sucesso}">
+        <div class="alert alert-success alert-dismissible fade show">
+            <th:block th:text="${sucesso}"></th:block>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </th:block>
 
     <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover align-middle">
             <thead>
                 <tr>
                     <th>Data e Hora</th>
@@ -34,12 +47,16 @@
                 <td> <a th:href="|/consultas/medico/${c.medico.id}|" th:text="${c.medico.nome}" th:title="'Ver Consultas do(a) Médico(a) \'' + ${c.medico.nome} + '\''"></a></td>
                 <td th:text="${c.observacao}"></td>
                 <td th:text="${c.valor}" class="numero"></td>
-                <td> <a class="editar" th:href="|/consultas/edit/${c.id}|">Editar</a></td>
-                <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
+                <td> <a class="btn btn-sm btn-outline-editar" th:href="|/consultas/edit/${c.id}|">Editar</a></td>
+                <td> <a class="btn btn-sm btn-outline-excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
             </tr>
         </table>
     </div>
     <p th:if="${#lists.isEmpty(consultas)}">Nenhuma consulta cadastrada</p>
+
+    <div class="d-flex flex-wrap mb-3 gap-3">
+        <a class="btn btn-primary" th:href="@{/consultas/form}">Cadastrar Consultas</a>
+    </div>
 </main>
 </body>
 </html>

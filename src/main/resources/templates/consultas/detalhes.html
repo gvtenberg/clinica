@@ -3,11 +3,11 @@
 <head th:replace="~{fragments/head :: head('Consultas')}"></head>
 
 <body>
-<main class="container">
+<main class="container-md">
     <h1 th:text="${paciente == null ? 'Consultas do(a) Médico(a) ' + medico.nome : 'Consultas do(a) Paciente ' + paciente.nome}"></h1>
 
     <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover align-middle">
             <thead>
                 <tr>
                     <th>Data e Hora</th>
@@ -22,8 +22,8 @@
                 <td th:text="${paciente == null ? c.paciente.nome : c.medico.nome}"></td>
                 <td th:text="${c.observacao}"></td>
                 <td th:text="${c.valor}" class="numero"></td>
-                <td> <a class="editar" th:href="|/consultas/edit/${c.id}|">Editar</a></td>
-                <td> <a class="excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
+                <td> <a class="btn btn-sm btn-outline-editar" th:href="|/consultas/edit/${c.id}|">Editar</a></td>
+                <td> <a class="btn btn-sm btn-outline-excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
             </tr>
         </table>
     </div>

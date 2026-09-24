@@ -48,15 +48,20 @@ ser repassado manualmente por cada página.
 
 ### Bootstrap e responsividade
 
-A interface é estilizada exclusivamente com classes do Bootstrap 5 — sem
-folha de estilos própria no momento (`static/css/styles.css` existe, mas
-não está sendo carregado). As listagens (`list.html`, `detalhes.html`) usam
-`class="container"`, ocupando toda a largura disponível para acomodar as
-colunas das tabelas; os formulários usam `class="container-md"`, que trava
-a largura máxima em telas grandes, evitando campos exageradamente largos. Os
-campos dos formulários são organizados em `row`/`col-md-*`, dispostos lado a
-lado em telas médias/grandes e empilhados em telas estreitas. A navbar
-colapsa em um menu do tipo "hambúrguer" abaixo de 992px de largura.
+A interface é construída com Bootstrap 5, complementado por uma folha de
+estilos própria (`static/css/styles.css`) enxuta, restrita à identidade
+visual do projeto: a paleta de cores, aplicada sobrescrevendo as variáveis
+CSS dos componentes do Bootstrap (`--bs-btn-*`, `--bs-navbar-*`,
+`--bs-table-hover-bg`), e os indicadores de foco para navegação por teclado.
+Espaçamento, grade e responsividade ficam inteiramente a cargo do Bootstrap.
+Todas as views usam `class="container-md"`, e a folha de estilos própria limita
+sua largura máxima em 1140px — o Bootstrap, por padrão, permitiria que ela
+crescesse até 1320px em telas muito largas. Os campos dos formulários são
+organizados em `row`/`col-md-*`, dispostos lado a lado em telas médias/grandes
+e empilhados em telas estreitas. A navbar colapsa em um menu do tipo "hambúrguer"
+abaixo de 992px de largura. Os campos dos formulários são organizados em `row`/`col-md-*`,
+dispostos lado a lado em telas médias/grandes e empilhados em telas estreitas.
+A navbar colapsa em um menu do tipo "hambúrguer" abaixo de 992px de largura.
 
 ## Modelo de dados
 
@@ -127,6 +132,8 @@ A entidade `Consulta` é o lado dono das duas associações, ou seja, é na tabe
 - Máscaras de digitação para telefone e CPF nos formulários
 - Interface responsiva, reutilizando cabeçalho, navbar e rodapé por meio de
   fragmentos HTML do Thymeleaf
+- Listagens e campos de seleção ordenados alfabeticamente por nome
+- Mensagens de erro e sucesso dispensáveis pelo usuário (alertas do Bootstrap)
 
 ## Estrutura do projeto
 

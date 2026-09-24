@@ -6,11 +6,15 @@
 
     <head th:replace="${head}"></head>
 
+    <!--/* Tudo que for fixo fica no layout, como header e footer. head e main não são fixos, por isso são passados como parÂmetro */-->
     <body class="d-flex flex-column min-vh-100">
+        <!--/* Adiciona o fragmento header (navbar) diretamente do arquivo de fragmento nomeado como header */-->
         <header th:replace="~{fragments/header :: header}"></header>
 
+        <!--/* Carrega o conteúdo do parâmetro "main" */-->
         <main th:replace="${main}"></main>
 
+        <!--/* Adiciona o fragmento footer diretamente do arquivo de fragmento nomeado como footer */-->
         <footer th:replace="~{fragments/footer :: footer}"></footer>
     </body>
 </html>
