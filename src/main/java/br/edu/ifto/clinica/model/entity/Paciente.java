@@ -12,7 +12,6 @@ import java.util.List;
  * @Table define o nome da tabela correspondente
  */
 @Entity
-@Table(name = "paciente")
 public class Paciente extends PessoaFisica implements Serializable {
     /**
      * @OneToMany representa a multiplicidade 1 - 0..* do diagrama de classes: um paciente

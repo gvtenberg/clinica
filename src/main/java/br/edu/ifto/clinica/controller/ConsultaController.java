@@ -27,12 +27,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("consultas")
 public class ConsultaController {
-    @Autowired
-    private ConsultaRepository consultaRepository;
-    @Autowired
-    private MedicoRepository medicoRepository;
-    @Autowired
-    private PacienteRepository pacienteRepository;
+    private final ConsultaRepository consultaRepository;
+    private final MedicoRepository medicoRepository;
+    private final PacienteRepository pacienteRepository;
 
     /**
      * @param consultaRepository repositório de consultas entregue automaticamente pelo Spring

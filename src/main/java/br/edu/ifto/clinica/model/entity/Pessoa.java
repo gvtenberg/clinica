@@ -37,7 +37,7 @@ public abstract class Pessoa {
      * O e-mail é obrigatório e precisa ser informado no formato nome@domoinio.com
      */
     @NotBlank(message = "O e-mail é obrigatório")
-    @Email(message = "O e-mail deve seguir o formato nome@dominio.com")
+    @Email(message = "O e-mail deve seguir o formato nome@dominio.com", regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
     private String email;
 
     public Pessoa() {}

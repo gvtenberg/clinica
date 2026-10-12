@@ -1,8 +1,10 @@
 package br.edu.ifto.clinica.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -17,7 +19,6 @@ import java.time.LocalDateTime;
  * @Table define o nome da tabela correspondente
  */
 @Entity
-@Table(name = "consulta")
 public class Consulta implements Serializable {
     /**
      * @Id define o atributo como chave primária da entidade
@@ -33,6 +34,7 @@ public class Consulta implements Serializable {
      * pelo campo datetime-local do formulário e o tipo LocalDateTime
      */
     @NotNull(message = "A data da consulta é obrigatória")
+    @FutureOrPresent(message = "Escolha uma data de hoje em diante")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime data;
 

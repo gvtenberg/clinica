@@ -7,7 +7,8 @@
     <h1 th:text="${medico.id == null} ? 'Cadastrar Médico' : 'Editar Médico'"></h1>
 
     <form th:action="${medico.id == null} ? @{/medicos/save} : @{/medicos/update}" th:object="${medico}" method="post">
-        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger alert-dismissible fade show"> <!--/* Exibe as mensagens de erro cadastradas nos atributos da Entidade */-->
+        <!--/* Exibe as mensagens de erro cadastradas nos atributos da Entidade */-->
+        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger alert-dismissible fade show">
             <p th:each="erro : ${#fields.allErrors()}" th:text="${erro}"></p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -17,29 +18,32 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label" for="nome">Nome:</label>
-                <input class="form-control" id="nome" type="text" th:field="*{nome}" placeholder="Fulano da Silva" required>
+                <input class="form-control" id="nome" type="text" th:field="*{nome}" th:errorclass="is-invalid" placeholder="Fulano da Silva" required>
             </div>
 
             <div class="col-md-3 mb-3">
                 <label class="form-label" for="cpf">CPF:</label>
-                <input class="form-control" id="cpf" type="text" th:field="*{cpf}" placeholder="123.456.789-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" minlength="14" maxlength="14" title="Formato esperado: 123.456.789-00" required>
+                <input class="form-control" id="cpf" type="text" th:field="*{cpf}" th:errorclass="is-invalid" placeholder="123.456.789-00"
+                       pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" minlength="14" maxlength="14" title="Formato esperado: 123.456.789-00" required>
             </div>
 
             <div class="col-md-3 mb-3">
                 <label class="form-label" for="crm">CRM:</label>
-                <input class="form-control" id="crm" type="text" th:field="*{crm}" placeholder="CRM-TO 1234" required>
+                <input class="form-control" id="crm" type="text" th:field="*{crm}" th:errorclass="is-invalid" placeholder="CRM-TO 1234" required>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-8 mb-3">
                 <label class="form-label" for="email">E-mail:</label>
-                <input class="form-control" id="email" type="email" th:field="*{email}" placeholder="nome@dominio.com" title="Formato esperado: nome@dominio.com" required>
+                <input class="form-control" id="email" type="email" th:field="*{email}" th:errorclass="is-invalid"
+                       placeholder="nome@dominio.com" title="Formato esperado: nome@dominio.com" required>
             </div>
 
             <div class="col-md-4 mb-3">
                 <label class="form-label" for="fone">Fone:</label>
-                <input class="form-control" id="fone" type="text" th:field="*{telefone}" placeholder="(63) 91234-5678" pattern="\(\d{2}\) \d{4,5}-\d{4}" minlength="14" maxlength="15" required>
+                <input class="form-control" id="fone" type="text" th:field="*{telefone}" th:errorclass="is-invalid"
+                       placeholder="(63) 91234-5678" pattern="\(\d{2}\) \d{4,5}-\d{4}" minlength="14" maxlength="15" required>
             </div>
         </div>
 

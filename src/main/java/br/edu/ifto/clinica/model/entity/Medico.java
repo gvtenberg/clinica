@@ -13,7 +13,6 @@ import java.util.List;
  * @Table define o nome da tabela correspondente
  */
 @Entity
-@Table(name = "medico")
 public class Medico extends PessoaFisica implements Serializable {
     @NotBlank(message = "O CRM é obrigatório")
     private String crm;

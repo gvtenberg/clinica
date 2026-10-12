@@ -7,7 +7,8 @@
     <h1 th:text="${consulta.id == null} ? 'Cadastrar Consulta' : 'Editar Consulta'"></h1>
 
     <form th:action="${consulta.id == null} ? @{/consultas/save} : @{/consultas/update}" th:object="${consulta}" method="post">
-        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger alert-dismissible fade show"> <!--/* Exibe as mensagens de erro cadastradas nos atributos da Entidade */-->
+        <!--/* Exibe as mensagens de erro cadastradas nos atributos da Entidade */-->
+        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger alert-dismissible fade show">
             <p th:each="erro : ${#fields.allErrors()}" th:text="${erro}"></p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -17,12 +18,12 @@
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label class="form-label" for="data">Data:</label>
-                <input class="form-control" id="data" type="datetime-local" th:field="*{data}" placeholder="Data" required><!--/* Não precisa de th:value, pois th:field já gera id, name e value */-->
+                <input class="form-control" id="data" type="datetime-local" th:field="*{data}" th:errorclass="is-invalid" placeholder="Data" required> <!--/* Não precisa de th:value, pois th:field já gera id, name e value */-->
             </div>
 
             <div class="col-md-4 mb-3">
                 <label class="form-label" for="lista-medicos">Médico:</label>
-                <select class="form-select" id="lista-medicos" th:field="*{medico.id}" required>
+                <select class="form-select" id="lista-medicos" th:field="*{medico.id}" th:errorclass="is-invalid" required>
                     <option value="" hidden>Selecione um médico...</option>
                     <option th:each="m : ${medicos}" th:value="${m.id}" th:text="${m.nome}"></option>
                 </select>
@@ -30,7 +31,7 @@
 
             <div class="col-md-4 mb-3">
                 <label class="form-label" for="lista-pacientes">Paciente:</label>
-                <select class="form-select" id="lista-pacientes" th:field="*{paciente.id}" required>
+                <select class="form-select" id="lista-pacientes" th:field="*{paciente.id}" th:errorclass="is-invalid" required>
                     <option value="" hidden>Selecione um paciente...</option>
                     <option th:each="p : ${pacientes}" th:value="${p.id}" th:text="${p.nome}"></option>
                 </select>
@@ -40,12 +41,12 @@
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label class="form-label" for="valor">Valor:</label>
-                <input class="form-control" id="valor" type="number" step="0.01" th:field="*{valor}" placeholder="Valor" required>
+                <input class="form-control" id="valor" type="number" step="0.01" th:field="*{valor}" th:errorclass="is-invalid" placeholder="Valor" required>
             </div>
 
             <div class="col-md-8 mb-3">
                 <label class="form-label" for="observacao">Observação:</label>
-                <input class="form-control" id="observacao" type="text" th:field="*{observacao}" placeholder="Observação">
+                <input class="form-control" id="observacao" type="text" th:field="*{observacao}" th:errorclass="is-invalid" placeholder="Observação">
             </div>
         </div>
 

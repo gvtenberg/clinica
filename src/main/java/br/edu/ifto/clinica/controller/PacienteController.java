@@ -27,8 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("pacientes")
 public class PacienteController {
-    @Autowired
-    private PacienteRepository pacienteRepository;
+    private final PacienteRepository pacienteRepository;
 
     /**
      * @param pacienteRepository repositório entregue automaticamente pelo Spring.
