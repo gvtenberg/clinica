@@ -4,7 +4,6 @@ import br.edu.ifto.clinica.model.entity.Medico;
 import br.edu.ifto.clinica.model.repository.MedicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -15,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 /**
  * Controller responsável pelas operações CRUD da entidade Medico
  *
  * @Controller indica ao Spring que esta classe trata requisições web e devolve nomes de views
  * @RequestMapping define o prefixo comum a todas as URLs mapeadas nesta classe
- * @Transactional faz com que cada método execute dentro de uma transação, permitindo que o
- * EntityManager envie as alterações ao banco ao final da execução
+ * @Transactional garante que as operações do controller sejam executadas dentro de um contexto transacional
  */
 @Transactional
 @Controller
@@ -56,7 +56,7 @@ public class MedicoController {
      */
     @GetMapping("/list")
     public ModelAndView listar(ModelMap model) {
-        model.addAttribute("medicos", medicoRepository.buscarTodos());
+        model.addAttribute("medicos", medicoRepository.findAll());
         return new ModelAndView("medicos/list", model);
     }
 
@@ -74,7 +74,7 @@ public class MedicoController {
         if(result.hasErrors())
             return new ModelAndView("medicos/form", model); // Retorna ao formulário com os dados preenchidos
 
-        medicoRepository.salvar(medico);
+        medicoRepository.save(medico);
         attributes.addFlashAttribute("sucesso", "Médico(a) '" + medico.getNome() + "' cadastrado(a) com sucesso!");
         return new ModelAndView("redirect:/medicos/list");
     }
@@ -85,15 +85,15 @@ public class MedicoController {
      * @param model objeto utilizado para transportar dados do controller para a view
      * @return redirecionamento para a listagem em caso de sucesso, ou o próprio formulário em caso de erro.
      * A validação é necessária também na alteração: sem ela, um campo esvaziado seria detectado apenas
-     * pelo Hibernate durante a gravação, resultando em erro interno em vez de mensagem no formulário.
-     * O repositório utiliza merge, pois o objeto recebido do formulário está desanexado do contexto de persistência
+     * pelo banco durante a gravação, resultando em erro interno em vez de mensagem no formulário.
+     * O repositório utiliza o método save(), que reconhece a presença do ID e realiza a atualização (merge)
      */
     @PostMapping("/update")
     public ModelAndView update(@Valid Medico medico, BindingResult result, ModelMap model, RedirectAttributes attributes) {
         if(result.hasErrors())
             return new ModelAndView("medicos/form", model);
 
-        medicoRepository.update(medico);
+        medicoRepository.save(medico);
         attributes.addFlashAttribute("sucesso", "Dados do(a) Médico(a) '" + medico.getNome() + "' atualizados com sucesso");
         return new ModelAndView("redirect:/medicos/list");
     }
@@ -103,19 +103,24 @@ public class MedicoController {
      * @param attributes atributos de redirecionamento, utilizados para transportar a mensagem após o redirect
      * @return redirecionamento para a listagem de médicos
      * @PathVariable é utilizado quando o valor da variável é passado diretamente na URL.
-     * A existência de consultas é verificada antes da exclusão porque a tabela consulta possui
-     * chave estrangeira para médico, e o banco não permite apagar um registro que ainda é referenciado.
-     * O terceiro caso trata o registro inexistente, situação que ocorre quando a mesma exclusão
-     * é feita duas vezes, por exemplo a partir de duas abas do navegador
+     * A existência de consultas é verificada antes da exclusão para evitar violação de integridade referencial.
      */
     @GetMapping("/remove/{id}") // Por que não usar DeleteMapping?
     public ModelAndView remove(@PathVariable("id") Long id, RedirectAttributes attributes) {
-        if(!medicoRepository.buscarConsultas(id).isEmpty()){ // Para evitar erro de ConstraintViolationException quando existe consulta com o médico a ser excluído
-            attributes.addFlashAttribute("erro", "Médico(a) '" + medicoRepository.buscarPorId(id).getNome() + "' possui consultas e não pode ser excluído(a)");
-        } else if(medicoRepository.remover(id))
-            attributes.addFlashAttribute("sucesso", "Médico(a) com id = " + id + " removido(a) com sucesso");
-        else
+        Optional<Medico> medicoOptional = medicoRepository.findById(id);    // Para evitar erro de ConstraintViolationException quando o médico a ser excluído possui consulta cadastrada
+
+        if(medicoOptional.isEmpty()){
             attributes.addFlashAttribute("erro", "Erro ao remover o médico com id = " + id);
+            return new ModelAndView("redirect:/medicos/list");
+        }
+
+        Medico medico = medicoOptional.get();
+        if(!medico.getConsultas().isEmpty()){
+            attributes.addFlashAttribute("erro", "Médico(a) '" + medico.getNome() + "' possui consultas e não pode ser excluído(a)");
+        } else {
+            medicoRepository.deleteById(id);
+            attributes.addFlashAttribute("sucesso", "Médico(a) com id = " + id + " removido(a) com sucesso");
+        }
 
         return new ModelAndView("redirect:/medicos/list");
     }
@@ -129,7 +134,7 @@ public class MedicoController {
      */
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("medico", medicoRepository.buscarPorId(id));
+        model.addAttribute("medico", medicoRepository.findById(id).orElseThrow());
         return new ModelAndView("medicos/form", model);
     }
 }

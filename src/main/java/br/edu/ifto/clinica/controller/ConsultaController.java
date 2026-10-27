@@ -6,7 +6,6 @@ import br.edu.ifto.clinica.model.repository.MedicoRepository;
 import br.edu.ifto.clinica.model.repository.PacienteRepository;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -14,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 /**
- * Controller responsável pelas operações CRUD da entidade Consulta e pela consulta
- * das agendas de um paciente e de um médico
+ * Controller responsável pelas operações CRUD da entidade Consulta
  *
  * @Controller indica ao Spring que esta classe trata requisições web e devolve nomes de views
  * @RequestMapping define o prefixo comum a todas as URLs mapeadas nesta classe
- * @Transactional faz com que cada método execute dentro de uma transação, permitindo que o
- * EntityManager envie as alterações ao banco ao final da execução
+ * @Transactional garante que as operações do controller sejam executadas em um contexto transacional
  */
 @Transactional
 @Controller
@@ -59,8 +58,8 @@ public class ConsultaController {
             consulta.setValor(300.0);
         }
 
-        model.addAttribute("medicos", medicoRepository.buscarTodos());
-        model.addAttribute("pacientes", pacienteRepository.buscarTodos());
+        model.addAttribute("medicos", medicoRepository.findAll());
+        model.addAttribute("pacientes", pacienteRepository.findAll());
         return new ModelAndView("consultas/form", model);
     }
 
@@ -70,7 +69,7 @@ public class ConsultaController {
      */
     @GetMapping("/list")
     public ModelAndView listar(ModelMap model) {
-        model.addAttribute("consultas", consultaRepository.buscarTodas());
+        model.addAttribute("consultas", consultaRepository.findAll());
         return new ModelAndView("consultas/list", model);
     }
 
@@ -90,13 +89,13 @@ public class ConsultaController {
         validaConsulta(consulta, result);                                                   // validaConsulta() verifica se médico e paciente foram selecionados no form
 
         if(result.hasErrors()) {
-            model.addAttribute("medicos", medicoRepository.buscarTodos());      // Mostra a lista de médicos e pacientes...
-            model.addAttribute("pacientes", pacienteRepository.buscarTodos());  // ...quando retorna de um erro de formulário
+            model.addAttribute("medicos", medicoRepository.findAll());      // Mostra a lista de médicos e pacientes...
+            model.addAttribute("pacientes", pacienteRepository.findAll());  // ...quando retorna de um erro de formulário
             return new ModelAndView("consultas/form", model);
         }
 
-        consultaRepository.salvar(consulta);
-        attributes.addFlashAttribute("sucesso", "Consulta do(a) Paciente '" + pacienteRepository.buscarPorId(consulta.getPaciente().getId()).getNome() + "' cadastrada com sucesso!");
+        consultaRepository.save(consulta);
+        attributes.addFlashAttribute("sucesso", "Consulta do(a) Paciente '" + pacienteRepository.findById(consulta.getPaciente().getId()).orElseThrow().getNome() + "' cadastrada com sucesso!");
         return new ModelAndView("redirect:/consultas/list");
     }
 
@@ -107,7 +106,8 @@ public class ConsultaController {
      * @param attributes atributos de redirecionamento, utilizados para transportar a mensagem após o redirect
      * @return redirecionamento para a listagem em caso de sucesso, ou o próprio formulário em caso de erro.
      * A validação é necessária também na alteração: sem ela, um campo esvaziado seria detectado apenas
-     * pelo Hibernate durante a gravação, resultando em erro interno em vez de mensagem no formulário
+     * pelo banco durante a gravação, resultando em erro interno em vez de mensagem no formulário.
+     * O repositório utiliza o método save(), que reconhece a presença do ID e realiza a atualização (merge)
      */
     @PostMapping("/update")
     public ModelAndView update(@Valid Consulta consulta, BindingResult result, ModelMap model,
@@ -115,13 +115,13 @@ public class ConsultaController {
         validaConsulta(consulta, result);                                                   // validaConsulta() verifica se médico e paciente foram selecionados no form
 
         if(result.hasErrors()) {
-            model.addAttribute("medicos", medicoRepository.buscarTodos());      // Mostra a lista de médicos e pacientes...
-            model.addAttribute("pacientes", pacienteRepository.buscarTodos());  // ...quando retorna de um erro de formulário
+            model.addAttribute("medicos", medicoRepository.findAll());      // Mostra a lista de médicos e pacientes...
+            model.addAttribute("pacientes", pacienteRepository.findAll());  // ...quando retorna de um erro de formulário
             return new ModelAndView("consultas/form", model);
         }
 
-        consultaRepository.update(consulta);
-        attributes.addFlashAttribute("sucesso", "Consulta do(a) Paciente '" + pacienteRepository.buscarPorId(consulta.getPaciente().getId()).getNome() + "' atualizada com sucesso");
+        consultaRepository.save(consulta);
+        attributes.addFlashAttribute("sucesso", "Consulta do(a) Paciente '" + pacienteRepository.findById(consulta.getPaciente().getId()).orElseThrow().getNome() + "' atualizada com sucesso");
         return new ModelAndView("redirect:/consultas/list");
     }
 
@@ -130,17 +130,20 @@ public class ConsultaController {
      * @param attributes atributos de redirecionamento, utilizados para transportar a mensagem após o redirect
      * @return redirecionamento para a listagem de consultas
      * @PathVariable é utilizado quando o valor da variável é passado diretamente na URL.
-     * Não é necessário verificar vínculos, pois nenhuma tabela possui chave estrangeira para consulta.
-     * A verificação de retorno trata o caso do registro já excluído, situação que ocorre quando a
-     * mesma exclusão é feita duas vezes, por exemplo a partir de duas abas do navegador
+     * A consulta é buscada antes da remoção para verificar sua existência e capturar os dados do paciente
+     * necessários para compor a mensagem de sucesso exibida na view.
      */
     @GetMapping("/remove/{id}") // Por que não usar DeleteMapping?
     public ModelAndView remove(@PathVariable("id") Long id, RedirectAttributes attributes) {
-        if(consultaRepository.remover(id))
-            attributes.addFlashAttribute("sucesso", "Consulta com id = " + id + " removida com sucesso");
-        else
-            attributes.addFlashAttribute("erro", "Erro ao remover consulta com id = " + id);
+        Optional<Consulta> consultaOptional = consultaRepository.findById(id);
 
+        if(consultaOptional.isEmpty()) {
+            attributes.addFlashAttribute("erro", "Erro ao remover consulta com id = " + id);
+            return new ModelAndView("redirect:/consultas/list");
+        }
+
+        consultaRepository.deleteById(id);
+        attributes.addFlashAttribute("sucesso", "Consulta com id = " + id + " removida com sucesso");
         return new ModelAndView("redirect:/consultas/list");
     }
 
@@ -148,14 +151,15 @@ public class ConsultaController {
      * @param id identificador da consulta a ser editada
      * @param model objeto utilizado para transportar dados do controller para a view
      * @return view do formulário preenchida com os dados da consulta.
+     * O método extrai a entidade de dentro do Optional retornado pelo repositório.
      * É utilizado o mesmo formulário do cadastro, acompanhado das listas de médicos e de pacientes,
      * necessárias para que os campos de seleção apresentem as opções disponíveis
      */
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("consulta", consultaRepository.buscarPorId(id)); // Futuramente: verificar se consulta é null (qndo excluída em outra aba, por exemplo)
-        model.addAttribute("medicos", medicoRepository.buscarTodos());
-        model.addAttribute("pacientes", pacienteRepository.buscarTodos());
+        model.addAttribute("consulta", consultaRepository.findById(id).orElseThrow()); // Futuramente: verificar se consulta é null (qndo excluída em outra aba, por exemplo)
+        model.addAttribute("medicos", medicoRepository.findAll());
+        model.addAttribute("pacientes", pacienteRepository.findAll());
         return new ModelAndView("consultas/form", model);
     }
 
@@ -163,14 +167,13 @@ public class ConsultaController {
      * @param id identificador do paciente
      * @param model objeto utilizado para transportar dados do controller para a view
      * @return view com todas as consultas do paciente informado.
-     * Atende ao requisito de visualizar todas as consultas de um paciente. A view "detalhes" é
-     * compartilhada com a listagem por médico e diferencia os dois casos pela presença dos
-     * atributos "paciente" e "medico" no modelo
+     * Atende ao requisito de visualizar todas as consultas de um paciente. A entidade Paciente é extraída
+     * do Optional retornado pelo repositório para ser exibida nos detalhes do cabeçalho da view.
      */
     @GetMapping("/paciente/{id}")
     public ModelAndView consultaPaciente(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("consultas", pacienteRepository.buscarConsultas(id));
-        model.addAttribute("paciente", pacienteRepository.buscarPorId(id)); // Para a view mostrar mais dados
+        model.addAttribute("consultas", pacienteRepository.findConsultasById(id));
+        model.addAttribute("paciente", pacienteRepository.findById(id).orElseThrow()); // Para a view mostrar mais dados
         return new ModelAndView("consultas/detalhes", model);
     }
 
@@ -178,13 +181,13 @@ public class ConsultaController {
      * @param id identificador do médico
      * @param model objeto utilizado para transportar dados do controller para a view
      * @return view com todas as consultas realizadas pelo médico informado.
-     * Atende ao requisito de visualizar todas as consultas realizadas por um médico, utilizando
-     * a mesma view empregada na listagem por paciente
+     * Atende ao requisito de visualizar todas as consultas realizadas por um médico. A entidade Medico é extraída
+     * do Optional retornado pelo repositório para ser exibida nos detalhes do cabeçalho da view.
      */
     @GetMapping("/medico/{id}")
     public ModelAndView consultaMedico(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("consultas", medicoRepository.buscarConsultas(id));
-        model.addAttribute("medico", medicoRepository.buscarPorId(id)); // Para a view mostrar mais dados
+        model.addAttribute("consultas", medicoRepository.findConsultasById(id));
+        model.addAttribute("medico", medicoRepository.findById(id).orElseThrow()); // Para a view mostrar mais dados
         return new ModelAndView("consultas/detalhes", model);
     }
 

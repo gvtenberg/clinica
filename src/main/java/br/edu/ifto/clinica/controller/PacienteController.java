@@ -4,7 +4,6 @@ import br.edu.ifto.clinica.model.entity.Paciente;
 import br.edu.ifto.clinica.model.repository.PacienteRepository;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -15,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 /**
- * Controller responsável pelas operações CRUD da entidade Paciente.
+ * Controller responsável pelas operações CRUD da entidade Paciente
  *
  * @Controller indica ao Spring que esta classe trata requisições web e devolve nomes de views
  * @RequestMapping define o prefixo comum a todas as URLs mapeadas nesta classe
- * @Transactional faz com que cada método execute dentro de uma transação, permitindo que o
- * EntityManager envie as alterações ao banco ao final da execução
+ * @Transactional garante que as operações do controller sejam executadas dentro de um contexto transacional
  */
 @Transactional
 @Controller
@@ -56,7 +56,7 @@ public class PacienteController {
      */
     @GetMapping("/list")
     public ModelAndView listar(ModelMap model) {
-        model.addAttribute("pacientes", pacienteRepository.buscarTodos());
+        model.addAttribute("pacientes", pacienteRepository.findAll());
         return new ModelAndView("pacientes/list", model);
     }
 
@@ -74,7 +74,7 @@ public class PacienteController {
         if(result.hasErrors())
             return new ModelAndView("pacientes/form", model); // Retorna ao formulário com os dados preenchidos
 
-        pacienteRepository.salvar(paciente);
+        pacienteRepository.save(paciente);
         attributes.addFlashAttribute("sucesso", "Paciente '" + paciente.getNome() + "' cadastrado(a) com sucesso!");
         return new ModelAndView("redirect:/pacientes/list");
     }
@@ -85,15 +85,15 @@ public class PacienteController {
      * @param model objeto utilizado para transportar dados do controller para a view
      * @return redirecionamento para a listagem em caso de sucesso, ou o próprio formulário em caso de erro.
      * A validação é necessária também na alteração: sem ela, um campo esvaziado seria detectado apenas
-     * pelo Hibernate durante a gravação, resultando em erro interno em vez de mensagem no formulário.
-     * O repositório utiliza merge, pois o objeto recebido do formulário está desanexado do contexto de persistência
+     * pelo banco durante a gravação, resultando em erro interno em vez de mensagem no formulário.
+     * O repositório utiliza o método save(), que reconhece a presença do ID e realiza a atualização (merge)
      */
     @PostMapping("/update")
     public ModelAndView update(@Valid Paciente paciente, BindingResult result, ModelMap model, RedirectAttributes attributes) {
         if(result.hasErrors())
             return new ModelAndView("pacientes/form", model);
 
-        pacienteRepository.update(paciente);
+        pacienteRepository.save(paciente);
         attributes.addFlashAttribute("sucesso", "Dados do(a) Paciente '" + paciente.getNome() + "' atualizados com sucesso");
         return new ModelAndView("redirect:/pacientes/list");
     }
@@ -103,19 +103,24 @@ public class PacienteController {
      * @param attributes atributos de redirecionamento, utilizados para transportar a mensagem após o redirect
      * @return redirecionamento para a listagem de pacientes
      * @PathVariable é utilizado quando o valor da variável é passado diretamente na URL.
-     * A existência de consultas é verificada antes da exclusão porque a tabela consulta possui
-     * chave estrangeira para paciente, e o banco não permite apagar um registro que ainda é referenciado.
-     * O terceiro caso trata o registro inexistente, situação que ocorre quando a mesma exclusão
-     * é feita duas vezes, por exemplo a partir de duas abas do navegador
+     * A existência de consultas é verificada antes da exclusão para evitar violação de integridade referencial.
      */
     @GetMapping("/remove/{id}") // Por que não usar DeleteMapping?
     public ModelAndView remove(@PathVariable("id") Long id, RedirectAttributes attributes) {
-        if(!pacienteRepository.buscarConsultas(id).isEmpty()){ // Para evitar erro de ConstraintViolationException quando existe consulta com o paciente a ser excluído
-            attributes.addFlashAttribute("erro", "Paciente '" + pacienteRepository.buscarPorId(id).getNome() + "' possui consultas e não pode ser excluído(a)");
-        } else if(pacienteRepository.remover(id))
-            attributes.addFlashAttribute("sucesso", "Paciente com id = " + id + " removido(a) com sucesso");
-        else
+        Optional<Paciente> pacienteOptional = pacienteRepository.findById(id);    // Para evitar erro de ConstraintViolationException quando o paciente a ser excluído possui consulta cadastrada
+
+        if(pacienteOptional.isEmpty()){
             attributes.addFlashAttribute("erro", "Erro ao remover o paciente com id = " + id);
+            return new ModelAndView("redirect:/pacientes/list");
+        }
+
+        Paciente paciente = pacienteOptional.get();
+        if(!paciente.getConsultas().isEmpty()){
+            attributes.addFlashAttribute("erro", "Paciente '" + paciente.getNome() + "' possui consultas e não pode ser excluído(a)");
+        } else {
+            pacienteRepository.deleteById(id);
+            attributes.addFlashAttribute("sucesso", "Paciente com id = " + id + " removido(a) com sucesso");
+        }
 
         return new ModelAndView("redirect:/pacientes/list");
     }
@@ -129,7 +134,7 @@ public class PacienteController {
      */
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("paciente", pacienteRepository.buscarPorId(id));
+        model.addAttribute("paciente", pacienteRepository.findById(id).orElseThrow());
         return new ModelAndView("pacientes/form", model);
     }
 }
