@@ -127,7 +127,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 .navbar .nav-link:focus-visible,
 .navbar .navbar-brand:focus-visible,
-.navbar .navbar-toggler:focus-visible {
+.navbar .navbar-toggler:focus-visible,
+.navbar .btn:focus-visible {
     outline: 2px solid #ffffff;
     outline-offset: 0;
     border-radius: 6px;

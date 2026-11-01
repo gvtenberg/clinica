@@ -19,6 +19,9 @@ public class NavegacaoControllerAdvice {
     public String paginaAtual(HttpServletRequest request) {
         String caminho = request.getRequestURI();
 
+        if(caminho.equals("/login")){
+            return "login";
+        }
         if(caminho.startsWith("/consultas")){
             return "consultas";
         }

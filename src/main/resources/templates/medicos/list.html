@@ -1,4 +1,4 @@
-<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head th:replace="~{fragments/head :: head('Médicos Cadastrados')}"></head>
 
@@ -8,10 +8,6 @@
 
     <div class="d-flex flex-wrap mb-3 gap-3">
         <a class="btn btn-primary" th:href="@{/medicos/form}">Cadastrar Médicos</a>
-<!--/*
-        <a class="btn btn-outline-primary" th:href="@{/consultas/list}">Ver Consultas</a>
-
-        <a class="btn btn-outline-primary" th:href="@{/pacientes/list}">Ver Pacientes</a> */-->
     </div>
 
     <!--/* Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view */-->
@@ -47,8 +43,10 @@
                 <td th:text="${m.crm}"></td>
                 <td th:text="${m.telefone}"></td>
                 <td th:text="${m.email}"></td>
-                <td> <a class="btn btn-sm btn-outline-editar" th:href="|/medicos/edit/${m.id}|">Editar</a></td>
-                <td> <a class="btn btn-sm btn-outline-excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/medicos/remove/${m.id}|">Excluir</a></td>
+                <td> <a sec:authorize="hasRole('ADMIN')" class="btn btn-sm btn-outline-editar"
+                        th:href="|/medicos/edit/${m.id}|">Editar</a></td> <!--/* Somente admin edita e exclui médico */-->
+                <td> <a sec:authorize="hasRole('ADMIN')" class="btn btn-sm btn-outline-excluir" th:href="|/medicos/remove/${m.id}|"
+                        onclick="return window.confirm('Tem certeza que deseja excluir este registro?')">Excluir</a></td>
                 <td> <a class="btn btn-sm btn-outline-consultas" th:href="|/consultas/medico/${m.id}|">Consultas</a></td>
             </tr>
         </table>

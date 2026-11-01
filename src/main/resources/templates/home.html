@@ -1,0 +1,27 @@
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{fragments/head :: head('Clínica')}"></head>
+
+<body>
+<main class="container-md">
+    <h1>Bem-vindo(a) à Clínica</h1>
+
+    <!--/* Usuário sem login */-->
+    <div sec:authorize="!isAuthenticated()">
+        <p>Aqui você pode verificar suas consultas</p>
+        <a class="btn btn-primary" th:href="@{/login}">Entrar</a>
+    </div>
+
+    <!--/* Para usuários logados */-->
+    <div sec:authorize="isAuthenticated()" class="d-flex flex-wrap gap-3">
+        <a sec:authorize="hasRole('PACIENTE')" class="btn btn-primary"
+           th:href="@{/consultas/paciente/1}">Minhas consultas</a> <!--/* Alterar para mostrar somente consultas do médico/paciente logado */-->
+        <a sec:authorize="hasRole('MEDICO')" class="btn btn-primary"
+           th:href="@{/consultas/medico/7}">Minhas consultas</a> <!--/* Alterar para mostrar somente consultas do médico/paciente logado */-->
+        <a sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')" class="btn btn-primary" th:href="@{/consultas/list}">Consultas</a>
+        <a sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')" class="btn btn-primary" th:href="@{/pacientes/list}">Pacientes</a>
+        <a sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')" class="btn btn-primary" th:href="@{/medicos/list}">Médicos</a>
+    </div>
+</main>
+</body>
+</html>

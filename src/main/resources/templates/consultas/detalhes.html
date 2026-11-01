@@ -1,10 +1,17 @@
-<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head th:replace="~{fragments/head :: head('Consultas')}"></head>
 
 <body>
 <main class="container-md">
     <h1 th:text="${paciente == null ? 'Consultas do(a) Médico(a) ' + medico.nome : 'Consultas do(a) Paciente ' + paciente.nome}"></h1>
+
+    <div class="d-flex flex-wrap mb-3 gap-3">
+        <a sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')" class="btn btn-primary"
+           th:href="${paciente == null ? '/medicos/list' : '/pacientes/list'}">Consultas de outros
+            <span th:text="${paciente == null ? 'Médicos' : 'Pacientes'}">ERRO</span></a>
+        <a class="btn btn-primary" onclick="history.go(-1);">Voltar</a>
+    </div>
 
     <div class="table-responsive">
         <table class="table table-striped table-hover align-middle">
@@ -14,7 +21,7 @@
                     <th th:text="${paciente == null ? 'Paciente' : 'Médico'}"></th>
                     <th>Observação</th>
                     <th>Valor</th>
-                    <th colspan="2">Ações</th>
+                    <th sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')" colspan="2">Ações</th>
                 </tr>
             </thead>
             <tr th:each="c : ${consultas}">
@@ -22,12 +29,20 @@
                 <td th:text="${paciente == null ? c.paciente.nome : c.medico.nome}"></td>
                 <td th:text="${c.observacao}"></td>
                 <td th:text="${c.valor}" class="numero"></td>
-                <td> <a class="btn btn-sm btn-outline-editar" th:href="|/consultas/edit/${c.id}|">Editar</a></td>
-                <td> <a class="btn btn-sm btn-outline-excluir" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
+                <td sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')"> <a class="btn btn-sm btn-outline-editar" th:href="|/consultas/edit/${c.id}|">Editar</a></td>
+                <td sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')"> <a class="btn btn-sm btn-outline-excluir"
+                        onclick="return window.confirm('Tem certeza que deseja excluir este registro?')" th:href="|/consultas/remove/${c.id}|">Excluir</a></td>
             </tr>
         </table>
     </div>
     <p th:if="${#lists.isEmpty(consultas)}">Nenhuma consulta encontrada</p>
+
+    <div class="d-flex flex-wrap mb-3 gap-3">
+        <a sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')" class="btn btn-primary"
+           th:href="${paciente == null ? '/medicos/list' : '/pacientes/list'}">Consultas de outros
+            <span th:text="${paciente == null ? 'Médicos' : 'Pacientes'}">ERRO</span></a>
+        <a class="btn btn-primary" onclick="history.go(-1);">Voltar</a>
+    </div>
 </main>
 </body>
 </html>

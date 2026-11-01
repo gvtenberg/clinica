@@ -1,0 +1,12 @@
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head('Página não encontrada')}"></head>
+
+<body>
+    <main class="container-md">
+        <h1>Página não encontrada</h1>
+        <p>A página que você está tentando acessar não existe no servidor.</p>
+        <a class="btn btn-primary" th:href="@{/}">Voltar ao início</a>
+    </main>
+</body>
+</html>

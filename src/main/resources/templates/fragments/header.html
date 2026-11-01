@@ -1,22 +1,48 @@
-
-<header th:fragment="header">
+<header th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
 
     <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
         <div class="container-md">
             <a class="navbar-brand" th:href="@{/}">CLINICA</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" th:classappend="${paginaAtual == 'consultas'} ? 'active'" th:aria-current="${paginaAtual == 'consultas'} ? 'page'" th:href="@{/consultas/list}">Consultas</a>
+                    <li class="nav-item" sec:authorize="hasRole('MEDICO')">
+                        <a class="nav-link" th:classappend="${paginaAtual == 'minhas'} ? 'active'"
+                           th:aria-current="${paginaAtual == 'minhas'} ? 'page'" th:href="@{/consultas/medico/7}">Minhas consultas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:classappend="${paginaAtual == 'pacientes'} ? 'active'" th:aria-current="${paginaAtual == 'pacientes'} ? 'page'" th:href="@{/pacientes/list}">Pacientes</a>
+                    <li class="nav-item" sec:authorize="hasRole('PACIENTE')">
+                        <a class="nav-link" th:classappend="${paginaAtual == 'minhas'} ? 'active'"
+                           th:aria-current="${paginaAtual == 'minhas'} ? 'page'" th:href="@{/consultas/paciente/1}">Minhas consultas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:classappend="${paginaAtual == 'medicos'} ? 'active'" th:aria-current="${paginaAtual == 'medicos'} ? 'page'" th:href="@{/medicos/list}">Médicos</a>
+                    <li class="nav-item" sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')">
+                        <a class="nav-link" th:classappend="${paginaAtual == 'consultas'} ? 'active'"
+                           th:aria-current="${paginaAtual == 'consultas'} ? 'page'" th:href="@{/consultas/list}">Consultas</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')">
+                        <a class="nav-link" th:classappend="${paginaAtual == 'pacientes'} ? 'active'"
+                           th:aria-current="${paginaAtual == 'pacientes'} ? 'page'" th:href="@{/pacientes/list}">Pacientes</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')">
+                        <a class="nav-link" th:classappend="${paginaAtual == 'medicos'} ? 'active'"
+                           th:aria-current="${paginaAtual == 'medicos'} ? 'page'" th:href="@{/medicos/list}">Médicos</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav align-items-lg-center gap-2">
+                    <li class="nav-item" sec:authorize="isAuthenticated()"> <!--/* Mostra nome e botão quando existe usuário logado */-->
+                        <span class="navbar-text">Olá, <strong sec:authentication="name">usuário</strong></span>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post"> <!--/* Logout exige POST (th:action inclui automaticamente o token CSRF) */-->
+                            <button type="submit" class="btn btn-sm btn-outline-light">Sair</button>
+                        </form>
+                    </li>
+
+                    <li class="nav-item" sec:authorize="!isAuthenticated()" th:unless="${paginaAtual == 'login'}"> <!--/* Botão de entrar para usuários não logados */-->
+                        <a class="btn btn-sm btn-outline-light" th:href="@{/login}">Entrar</a>
                     </li>
                 </ul>
             </div>
