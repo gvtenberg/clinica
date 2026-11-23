@@ -26,8 +26,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        // Páginas públicas: acessíveis sem login
-                        .requestMatchers("/", "/css/**", "/js/**", "/images/**").permitAll()
+                        // Arquivos estáticos: acessíveis sem login
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // O / foi removido para cair direto na tela de login
 
                         // O paciente pode fazer o próprio cadastro, sem login
                         .requestMatchers("/pacientes/form").permitAll()

@@ -5,9 +5,13 @@ import br.edu.ifto.clinica.model.entity.Perfil;
 import br.edu.ifto.clinica.model.entity.Usuario;
 import br.edu.ifto.clinica.model.repository.PacienteRepository;
 import br.edu.ifto.clinica.model.repository.PerfilRepository;
+import br.edu.ifto.clinica.model.repository.UsuarioRepository;
+import br.edu.ifto.clinica.model.validation.Cadastro;
+import br.edu.ifto.clinica.model.validation.Edicao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +43,7 @@ public class PacienteController {
     private final PacienteRepository pacienteRepository;
     private final PerfilRepository perfilRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UsuarioRepository usuarioRepository;
 
     /**
      * @param pacienteRepository repositório entregue automaticamente pelo Spring.
@@ -45,10 +51,11 @@ public class PacienteController {
      * repositório, sem que seja necessário criá-lo manualmente com new
      */
     public PacienteController(PacienteRepository pacienteRepository, PerfilRepository perfilRepository,
-                              PasswordEncoder passwordEncoder) {
+                              PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository) {
         this.pacienteRepository = pacienteRepository;
         this.perfilRepository = perfilRepository;
         this.passwordEncoder = passwordEncoder;
+        this.usuarioRepository = usuarioRepository;
     }
 
     /**
@@ -83,8 +90,11 @@ public class PacienteController {
      * Em caso de erro, o formulário é renderizado na própria resposta do POST, preservando os dados digitados
      */
     @PostMapping("/save")
-    public ModelAndView save(@Valid Paciente paciente, BindingResult result, ModelMap model, RedirectAttributes attributes,
+    public ModelAndView save(@Validated({Default.class, Cadastro.class}) Paciente paciente, BindingResult result, ModelMap model, RedirectAttributes attributes,
                              Authentication authentication, HttpServletRequest request) throws ServletException {
+        validaCpf(paciente, result);
+        validaUsuario(paciente, result);
+
         if(result.hasErrors())
             return new ModelAndView("pacientes/form", model); // Retorna ao formulário com os dados preenchidos
 
@@ -114,11 +124,13 @@ public class PacienteController {
      * O repositório utiliza o método save(), que reconhece a presença do ID e realiza a atualização (merge)
      */
     @PostMapping("/update")
-    public ModelAndView update(@Valid Paciente paciente, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+    public ModelAndView update(@Validated({Default.class, Edicao.class}) Paciente paciente, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+        validaCpf(paciente, result);
+
         if(result.hasErrors())
             return new ModelAndView("pacientes/form", model);
 
-        paciente.setUsuario(pacienteRepository.findById(paciente.getId()).orElseThrow().getUsuario());
+        atualizarConta(paciente);
         pacienteRepository.save(paciente);
         attributes.addFlashAttribute("sucesso", "Dados do(a) Paciente '" + paciente.getNome() + "' atualizados com sucesso");
         return new ModelAndView("redirect:/pacientes/list");
@@ -197,5 +209,38 @@ public class PacienteController {
         }
 
         return false;
+    }
+
+    /**
+     * Na edição, mantém a conta que está no banco e troca a senha somente se ela foi preenchida
+     */
+    private void atualizarConta(Paciente paciente) {
+        Usuario conta = pacienteRepository.findById(paciente.getId()).orElseThrow().getUsuario();
+        Usuario digitado = paciente.getUsuario();
+
+        if (conta != null && digitado != null && digitado.getSenha() != null && !digitado.getSenha().isBlank()) {
+            conta.setSenha(passwordEncoder.encode(digitado.getSenha()));
+        }
+
+        paciente.setUsuario(conta);
+    }
+
+    /**
+     * Registra erro se o CPF pertence a outro cadastro. Na edição, o próprio registro não conta como repetido
+     */
+    private void validaCpf(Paciente paciente, BindingResult result) {
+        Paciente existente = pacienteRepository.findByCpf(paciente.getCpf());
+        if (existente != null && !existente.getId().equals(paciente.getId())) {
+            result.rejectValue("cpf", "cpf.duplicado", "Este CPF já está cadastrado");
+        }
+    }
+
+    /**
+     * Registra erro se o nome de usuário já pertence a outra conta
+     */
+    private void validaUsuario(Paciente paciente, BindingResult result) {
+        if (paciente.getUsuario() != null && usuarioRepository.findByUsuario(paciente.getUsuario().getUsuario()) != null) {
+            result.rejectValue("usuario.usuario", "usuario.duplicado", "Este usuário já está em uso");
+        }
     }
 }

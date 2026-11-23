@@ -1,5 +1,6 @@
 package br.edu.ifto.clinica.model.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
@@ -25,6 +26,7 @@ public abstract class PessoaFisica extends Pessoa {
      */
     @NotBlank(message = "O CPF é obrigatório")
     @CPF(message = "O CPF deve ser válido e deve seguir o formato 123.456.789-09")
+    @Column(unique = true)
     private String cpf;
 
     public PessoaFisica() {}

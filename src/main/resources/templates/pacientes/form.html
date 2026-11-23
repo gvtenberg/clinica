@@ -42,17 +42,17 @@
             </div>
         </div>
 
-        <div class="row" th:if="${paciente.id == null}">
-            <div class="col-md-6 mb-3">
+        <div class="row">
+            <div class="col-md-6 mb-3" th:if="${paciente.id == null}">
                 <label class="form-label" for="usuario">Usuário:</label>
                 <input class="form-control" id="usuario" type="text" th:field="*{usuario.usuario}" th:errorclass="is-invalid"
                        maxlength="50" autocomplete="username" required>
             </div>
 
             <div class="col-md-6 mb-3">
-                <label class="form-label" for="senha">Senha:</label>
+                <label class="form-label" for="senha" th:text="${paciente.id == null} ? 'Senha:' : 'Nova senha (em branco, mantém a atual):'"></label>
                 <input class="form-control" id="senha" type="password" th:field="*{usuario.senha}" th:errorclass="is-invalid"
-                       maxlength="50" autocomplete="new-password" required>
+                       maxlength="50" autocomplete="new-password" th:required="${paciente.id == null}">
             </div>
         </div>
 

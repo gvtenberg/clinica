@@ -1,8 +1,11 @@
 package br.edu.ifto.clinica.model.entity;
 
+import br.edu.ifto.clinica.model.validation.Cadastro;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 /**
@@ -40,6 +43,8 @@ public abstract class Pessoa {
     @Email(message = "O e-mail deve seguir o formato nome@dominio.com", regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
     private String email;
 
+    @NotNull(message = "Informe os dados de acesso", groups = Cadastro.class)
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario", unique = true)
     private Usuario usuario;

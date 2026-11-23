@@ -11,15 +11,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <!--/* Usuário sem login */-->
-    <div sec:authorize="!isAuthenticated()">
-        <p>Aqui você pode verificar suas consultas</p>
-        <a class="btn btn-primary" th:href="@{/login}">Entrar</a>
-        <a class="btn btn-outline-primary" th:href="@{/pacientes/form}">Cadastre-se</a>
-    </div>
-
-    <!--/* Para usuários logados */-->
-    <div sec:authorize="isAuthenticated()" class="d-flex flex-wrap gap-3">
+    <!--/* Atalhos conforme o perfil. Só chega aqui quem já fez login */-->
+    <div class="d-flex flex-wrap gap-3">
         <a sec:authorize="hasAnyRole('PACIENTE','MEDICO')" class="btn btn-primary"
            th:href="@{/consultas/minhas}">Minhas consultas</a>
         <a sec:authorize="hasAnyRole('SECRETARIO', 'ADMIN')" class="btn btn-primary" th:href="@{/consultas/list}">Consultas</a>

@@ -5,12 +5,17 @@ import br.edu.ifto.clinica.model.entity.Perfil;
 import br.edu.ifto.clinica.model.entity.Usuario;
 import br.edu.ifto.clinica.model.repository.MedicoRepository;
 import br.edu.ifto.clinica.model.repository.PerfilRepository;
+import br.edu.ifto.clinica.model.repository.UsuarioRepository;
+import br.edu.ifto.clinica.model.validation.Cadastro;
+import br.edu.ifto.clinica.model.validation.Edicao;
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +39,7 @@ public class MedicoController {
     private final MedicoRepository medicoRepository;
     private final PerfilRepository perfilRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UsuarioRepository usuarioRepository;
 
     /**
      * @param medicoRepository repositório entregue automaticamente pelo Spring.
@@ -41,10 +47,11 @@ public class MedicoController {
      * repositório, sem que seja necessário criá-lo manualmente com new
      */
     public MedicoController(MedicoRepository medicoRepository, PerfilRepository perfilRepository,
-                            PasswordEncoder passwordEncoder) {
+                            PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository) {
         this.medicoRepository = medicoRepository;
         this.perfilRepository = perfilRepository;
         this.passwordEncoder = passwordEncoder;
+        this.usuarioRepository = usuarioRepository;
     }
 
     /**
@@ -79,7 +86,10 @@ public class MedicoController {
      * Em caso de erro, o formulário é renderizado na própria resposta do POST, preservando os dados digitados
      */
     @PostMapping("/save")
-    public ModelAndView save(@Valid Medico medico, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+    public ModelAndView save(@Validated({Default.class, Cadastro.class}) Medico medico, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+        validaCpf(medico, result);
+        validaUsuario(medico, result);
+
         if(result.hasErrors())
             return new ModelAndView("medicos/form", model); // Retorna ao formulário com os dados preenchidos
 
@@ -99,11 +109,13 @@ public class MedicoController {
      * O repositório utiliza o método save(), que reconhece a presença do ID e realiza a atualização (merge)
      */
     @PostMapping("/update")
-    public ModelAndView update(@Valid Medico medico, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+    public ModelAndView update(@Validated({Default.class, Edicao.class}) Medico medico, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+        validaCpf(medico, result);
+
         if(result.hasErrors())
             return new ModelAndView("medicos/form", model);
 
-        medico.setUsuario(medicoRepository.findById(medico.getId()).orElseThrow().getUsuario());
+        atualizarConta(medico);
         medicoRepository.save(medico);
         attributes.addFlashAttribute("sucesso", "Dados do(a) Médico(a) '" + medico.getNome() + "' atualizados com sucesso");
         return new ModelAndView("redirect:/medicos/list");
@@ -164,5 +176,38 @@ public class MedicoController {
         conta.adicionarPerfil(perfil);
         medico.setId(null); // cadastro não sobrescreve uma pessoa existente
         medico.setUsuario(conta);
+    }
+
+    /**
+     * Na edição, mantém a conta que está no banco e troca a senha somente se ela foi preenchida
+     */
+    private void atualizarConta(Medico medico) {
+        Usuario conta = medicoRepository.findById(medico.getId()).orElseThrow().getUsuario();
+        Usuario digitado = medico.getUsuario();
+
+        if (conta != null && digitado != null && digitado.getSenha() != null && !digitado.getSenha().isBlank()) {
+            conta.setSenha(passwordEncoder.encode(digitado.getSenha()));
+        }
+
+        medico.setUsuario(conta);
+    }
+
+    /**
+     * Registra erro se o CPF pertence a outro cadastro. Na edição, o próprio registro não conta como repetido
+     */
+    private void validaCpf(Medico medico, BindingResult result) {
+        Medico existente = medicoRepository.findByCpf(medico.getCpf());
+        if (existente != null && !existente.getId().equals(medico.getId())) {
+            result.rejectValue("cpf", "cpf.duplicado", "Este CPF já está cadastrado");
+        }
+    }
+
+    /**
+     * Registra erro se o nome de usuário já pertence a outra conta
+     */
+    private void validaUsuario(Medico medico, BindingResult result) {
+        if (medico.getUsuario() != null && usuarioRepository.findByUsuario(medico.getUsuario().getUsuario()) != null) {
+            result.rejectValue("usuario.usuario", "usuario.duplicado", "Este usuário já está em uso");
+        }
     }
 }

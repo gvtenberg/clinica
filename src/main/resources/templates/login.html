@@ -11,7 +11,7 @@
             <div th:if="${param.logout}" class="alert alert-success">Você saiu do sistema.</div>
 
             <div class="card shadow-sm">
-                <h1 class="card-header h5">Informe usuário e senha</h1> <!-- Alterar aqui: excluir linha? -->
+                <h1 class="card-header h5">Bem-vindo(a) à Clínica</h1>
                 <div class="card-body">
                     <form th:action="@{/login}" method="post"> <!--/* Enviados para o sprgin, pois não foram criados métodos POST nos controllers */-->
                         <div class="mb-3">

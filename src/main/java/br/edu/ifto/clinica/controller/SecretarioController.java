@@ -5,12 +5,17 @@ import br.edu.ifto.clinica.model.entity.Secretario;
 import br.edu.ifto.clinica.model.entity.Usuario;
 import br.edu.ifto.clinica.model.repository.PerfilRepository;
 import br.edu.ifto.clinica.model.repository.SecretarioRepository;
+import br.edu.ifto.clinica.model.repository.UsuarioRepository;
+import br.edu.ifto.clinica.model.validation.Cadastro;
+import br.edu.ifto.clinica.model.validation.Edicao;
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,12 +33,14 @@ public class SecretarioController {
     private final SecretarioRepository secretarioRepository;
     private final PerfilRepository perfilRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UsuarioRepository usuarioRepository;
 
     public SecretarioController(SecretarioRepository secretarioRepository, PerfilRepository perfilRepository,
-                                PasswordEncoder passwordEncoder) {
+                                PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository) {
         this.secretarioRepository = secretarioRepository;
         this.perfilRepository = perfilRepository;
         this.passwordEncoder = passwordEncoder;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @GetMapping("/form")
@@ -48,7 +55,10 @@ public class SecretarioController {
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@Valid Secretario secretario, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+    public ModelAndView save(@Validated({Default.class, Cadastro.class}) Secretario secretario, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+        validaCpf(secretario, result);
+        validaUsuario(secretario, result);
+
         if(result.hasErrors())
             return new ModelAndView("secretarios/form", model); // Retorna ao formulário com os dados preenchidos
 
@@ -59,11 +69,13 @@ public class SecretarioController {
     }
 
     @PostMapping("/update")
-    public ModelAndView update(@Valid Secretario secretario, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+    public ModelAndView update(@Validated({Default.class, Edicao.class}) Secretario secretario, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+        validaCpf(secretario, result);
+
         if(result.hasErrors())
             return new ModelAndView("secretarios/form", model);
 
-        secretario.setUsuario(secretarioRepository.findById(secretario.getId()).orElseThrow().getUsuario());
+        atualizarConta(secretario);
         secretarioRepository.save(secretario);
         attributes.addFlashAttribute("sucesso", "Dados do(a) Secretário(a) '" + secretario.getNome() + "' atualizados com sucesso");
         return new ModelAndView("redirect:/secretarios/list");
@@ -100,5 +112,38 @@ public class SecretarioController {
         conta.adicionarPerfil(perfil);
         secretario.setId(null); // cadastro não sobrescreve uma pessoa existente
         secretario.setUsuario(conta);
+    }
+
+    /**
+     * Na edição, mantém a conta que está no banco e troca a senha somente se ela foi preenchida
+     */
+    private void atualizarConta(Secretario secretario) {
+        Usuario conta = secretarioRepository.findById(secretario.getId()).orElseThrow().getUsuario();
+        Usuario digitado = secretario.getUsuario();
+
+        if (conta != null && digitado != null && digitado.getSenha() != null && !digitado.getSenha().isBlank()) {
+            conta.setSenha(passwordEncoder.encode(digitado.getSenha()));
+        }
+
+        secretario.setUsuario(conta);
+    }
+
+    /**
+     * Registra erro se o CPF pertence a outro cadastro. Na edição, o próprio registro não conta como repetido
+     */
+    private void validaCpf(Secretario secretario, BindingResult result) {
+        Secretario existente = secretarioRepository.findByCpf(secretario.getCpf());
+        if (existente != null && !existente.getId().equals(secretario.getId())) {
+            result.rejectValue("cpf", "cpf.duplicado", "Este CPF já está cadastrado");
+        }
+    }
+
+    /**
+     * Registra erro se o nome de usuário já pertence a outra conta
+     */
+    private void validaUsuario(Secretario secretario, BindingResult result) {
+        if (secretario.getUsuario() != null && usuarioRepository.findByUsuario(secretario.getUsuario().getUsuario()) != null) {
+            result.rejectValue("usuario.usuario", "usuario.duplicado", "Este usuário já está em uso");
+        }
     }
 }

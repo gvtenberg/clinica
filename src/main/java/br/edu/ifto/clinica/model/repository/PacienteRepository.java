@@ -39,4 +39,6 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
      */
     @Query("select paciente from Paciente paciente where paciente.usuario.usuario = :login")
     Paciente findByLogin(@Param("login") String login);
+
+    Paciente findByCpf(String cpf);
 }

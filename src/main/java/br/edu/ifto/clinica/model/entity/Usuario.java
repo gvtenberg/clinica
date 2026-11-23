@@ -1,6 +1,10 @@
 package br.edu.ifto.clinica.model.entity;
 
+import br.edu.ifto.clinica.model.validation.Cadastro;
+import br.edu.ifto.clinica.model.validation.Edicao;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +15,13 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "O usuário é obrigatório", groups = Cadastro.class)
+    @Size(max = 50, message = "O usuário deve ter no máximo 50 caracteres", groups = Cadastro.class)
     @Column(nullable = false, unique = true, length = 50)
     private String usuario;
 
+    @NotBlank(message = "A senha é obrigatória", groups = Cadastro.class)
+    @Size(max = 50, message = "A senha deve ter no máximo 50 caracteres", groups = {Cadastro.class, Edicao.class})
     @Column(nullable = false, length = 100)
     private String senha; // hash BCrypt
 
