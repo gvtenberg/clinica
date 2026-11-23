@@ -49,6 +49,10 @@ INSERT INTO medico (id, nome, cpf, crm, email, telefone, id_usuario) VALUES
     (9, 'Marcos Vinicius Ferreira', '999.000.111-12', 'CRM-TO 34567', 'marcos.ferreira@clinica.com', '(63) 98888-3333', 11),
     (10, 'Patrícia Ribeiro', '000.111.222-85', 'CRM-TO 45678', 'patricia.ribeiro@clinica.com', '(63) 98888-4444', 12);
 
+-- id, nome, cpf, email, telefone, id do usuário
+INSERT INTO secretario (id, nome, cpf, email, telefone, id_usuario) VALUES
+    (11, 'Alex Nogueira', '529.982.247-25', 'alex.nogueira@clinica.com', '(63) 98888-5555', 2);
+
 -- id, data, valor, observacao, id_paciente, id_medico
 INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES
     (1, '2026-08-25 08:00:00', 250.00, 'Consulta de rotina', 1, 7),
@@ -62,7 +66,7 @@ INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUE
     (9, '2026-08-28 08:00:00', 280.00, 'Avaliação de exames', 3, 7),
     (10, '2026-08-28 15:00:00', 320.00, 'Consulta especializada', 5, 9);
 
-ALTER SEQUENCE pessoa_seq RESTART WITH 11;
+ALTER SEQUENCE pessoa_seq RESTART WITH 12;
 ALTER TABLE consulta ALTER COLUMN id RESTART WITH 11;
 
 ALTER TABLE perfil ALTER COLUMN id RESTART WITH 5;

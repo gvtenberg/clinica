@@ -4,6 +4,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,21 +29,27 @@ public class SecurityConfiguration {
                         // Páginas públicas: acessíveis sem login
                         .requestMatchers("/", "/css/**", "/js/**", "/images/**").permitAll()
 
+                        // O paciente pode fazer o próprio cadastro, sem login
+                        .requestMatchers("/pacientes/form").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/pacientes/save").permitAll()
+
                         // Cada médico ou paciente vê somente as próprias consultas
                         .requestMatchers("/consultas/minhas").hasAnyRole("MEDICO", "PACIENTE")
 
-                        // Consultas são gerenciadas pela secretaria e administrador
+                        // Consultas são gerenciadas pelo secretário e administrador
                         .requestMatchers("/consultas/**").hasAnyRole("SECRETARIO", "ADMIN")
 
                         // Somente o administrador exclui pacientes
                         .requestMatchers("/pacientes/remove/**").hasRole("ADMIN")
                         .requestMatchers("/pacientes/**").hasAnyRole("SECRETARIO", "ADMIN")
 
-                        // A secretaria apenas consulta a lista de médicos
+                        // O secretário apenas consulta a lista de médicos
                         .requestMatchers("/medicos/list").hasAnyRole("SECRETARIO", "ADMIN")
                         .requestMatchers("/medicos/**").hasRole("ADMIN")
 
-                        //.requestMatchers(HttpMethod.POST, "/pessoa/save").permitAll()
+                        // Somente o administrador gerencia secretários
+                        .requestMatchers("/secretarios/**").hasRole("ADMIN")
+                        
                         .anyRequest().authenticated() // demais requisições exigem usuário autenticado
                 )
                 .formLogin(form -> form

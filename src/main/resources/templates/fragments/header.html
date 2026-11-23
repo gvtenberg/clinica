@@ -25,6 +25,10 @@
                         <a class="nav-link" th:classappend="${paginaAtual == 'medicos'} ? 'active'"
                            th:aria-current="${paginaAtual == 'medicos'} ? 'page'" th:href="@{/medicos/list}">Médicos</a>
                     </li>
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" th:classappend="${paginaAtual == 'secretarios'} ? 'active'"
+                           th:aria-current="${paginaAtual == 'secretarios'} ? 'page'" th:href="@{/secretarios/list}">Secretários</a>
+                    </li>
                 </ul>
 
                 <ul class="navbar-nav align-items-lg-center gap-2">

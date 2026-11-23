@@ -34,6 +34,9 @@ public class NavegacaoControllerAdvice {
         if(caminho.startsWith("/medicos")){
             return "medicos";
         }
+        if(caminho.startsWith("/secretarios")){
+            return "secretarios";
+        }
 
         return "";
     }

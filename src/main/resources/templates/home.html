@@ -6,10 +6,16 @@
 <main class="container-md">
     <h1>Bem-vindo(a) à Clínica</h1>
 
+    <div th:if="${sucesso}" class="alert alert-success alert-dismissible fade show">
+        <th:block th:text="${sucesso}"></th:block>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <!--/* Usuário sem login */-->
     <div sec:authorize="!isAuthenticated()">
         <p>Aqui você pode verificar suas consultas</p>
         <a class="btn btn-primary" th:href="@{/login}">Entrar</a>
+        <a class="btn btn-outline-primary" th:href="@{/pacientes/form}">Cadastre-se</a>
     </div>
 
     <!--/* Para usuários logados */-->
@@ -19,6 +25,7 @@
         <a sec:authorize="hasAnyRole('SECRETARIO', 'ADMIN')" class="btn btn-primary" th:href="@{/consultas/list}">Consultas</a>
         <a sec:authorize="hasAnyRole('SECRETARIO', 'ADMIN')" class="btn btn-primary" th:href="@{/pacientes/list}">Pacientes</a>
         <a sec:authorize="hasAnyRole('SECRETARIO', 'ADMIN')" class="btn btn-primary" th:href="@{/medicos/list}">Médicos</a>
+        <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/secretarios/list}">Secretários</a>
     </div>
 </main>
 </body>

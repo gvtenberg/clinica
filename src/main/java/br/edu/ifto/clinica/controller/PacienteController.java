@@ -5,7 +5,11 @@ import br.edu.ifto.clinica.model.entity.Perfil;
 import br.edu.ifto.clinica.model.entity.Usuario;
 import br.edu.ifto.clinica.model.repository.PacienteRepository;
 import br.edu.ifto.clinica.model.repository.PerfilRepository;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Controller;
@@ -79,14 +83,25 @@ public class PacienteController {
      * Em caso de erro, o formulário é renderizado na própria resposta do POST, preservando os dados digitados
      */
     @PostMapping("/save")
-    public ModelAndView save(@Valid Paciente paciente, BindingResult result, ModelMap model, RedirectAttributes attributes) {
+    public ModelAndView save(@Valid Paciente paciente, BindingResult result, ModelMap model, RedirectAttributes attributes,
+                             Authentication authentication, HttpServletRequest request) throws ServletException {
         if(result.hasErrors())
             return new ModelAndView("pacientes/form", model); // Retorna ao formulário com os dados preenchidos
 
+        String senhaDigitada = paciente.getUsuario().getSenha(); // guardada antes de virar hash em criarConta()
         criarConta(paciente);
         pacienteRepository.save(paciente);
         attributes.addFlashAttribute("sucesso", "Paciente '" + paciente.getNome() + "' cadastrado(a) com sucesso!");
-        return new ModelAndView("redirect:/pacientes/list");
+
+        if(ehEquipe(authentication))
+            return new ModelAndView("redirect:/pacientes/list");
+
+        if(authentication == null) { // visitante: já entra com a conta que acabou de criar
+            request.login(paciente.getUsuario().getUsuario(), senhaDigitada);
+            request.changeSessionId(); // novo id de sessão após o login
+        }
+
+        return new ModelAndView("redirect:/");
     }
 
     /**
@@ -164,5 +179,23 @@ public class PacienteController {
         conta.adicionarPerfil(perfil);
         paciente.setId(null); // cadastro não sobrescreve uma pessoa existente
         paciente.setUsuario(conta);
+    }
+
+    /**
+     * @param authentication dados de quem está logado, ou null quando é um visitante
+     * @return true se quem está cadastrando é secretário ou administrador
+     */
+    private boolean ehEquipe(Authentication authentication) {
+        if (authentication == null) {
+            return false;
+        }
+
+        for (GrantedAuthority authority : authentication.getAuthorities()) {
+            if (authority.getAuthority().equals("ROLE_SECRETARIO") || authority.getAuthority().equals("ROLE_ADMIN")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

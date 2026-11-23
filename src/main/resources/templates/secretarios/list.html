@@ -1,0 +1,58 @@
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{fragments/head :: head('Secretários Cadastrados')}"></head>
+
+<body>
+<main class="container-md">
+    <h1>Secretários Cadastrados</h1>
+
+    <div class="d-flex flex-wrap mb-3 gap-3">
+        <a class="btn btn-primary" th:href="@{/secretarios/form}">Cadastrar Secretários</a>
+    </div>
+
+    <!--/* Mensagens de erro ou de sucesso enviadas pelo controller como flash attributes para a view */-->
+    <th:block th:if="${erro}">
+        <div class="alert alert-danger alert-dismissible fade show">
+            <th:block th:text="${erro}"></th:block>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </th:block>
+
+    <th:block th:if="${sucesso}">
+        <div class="alert alert-success alert-dismissible fade show">
+            <th:block th:text="${sucesso}"></th:block>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </th:block>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Telefone</th>
+                <th>E-mail</th>
+                <th colspan="2">Ações</th>
+            </tr>
+            </thead>
+            <tr th:each="s : ${secretarios}">
+                <td th:text="${s.nome}"></td>
+                <td th:text="${s.cpf}"></td>
+                <td th:text="${s.telefone}"></td>
+                <td th:text="${s.email}"></td>
+                <td> <a class="btn btn-sm btn-outline-editar"
+                        th:href="|/secretarios/edit/${s.id}|">Editar</a></td>
+                <td> <a class="btn btn-sm btn-outline-excluir" th:href="|/secretarios/remove/${s.id}|"
+                        onclick="return window.confirm('Tem certeza que deseja excluir este registro?')">Excluir</a></td>
+            </tr>
+        </table>
+    </div>
+    <p th:if="${#lists.isEmpty(secretarios)}">Nenhum secretário cadastrado</p>
+
+    <div class="d-flex flex-wrap mb-3 gap-3">
+        <a class="btn btn-primary" th:href="@{/secretarios/form}">Cadastrar Secretários</a>
+    </div>
+</main>
+</body>
+</html>
