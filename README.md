@@ -58,6 +58,7 @@ uma reutiliza um conjunto de fragmentos comuns, definidos em
 | `head.html` | Metadados, título da página (recebido como parâmetro) e o CDN do Bootstrap |
 | `header.html` | Navbar, com o item do menu correspondente à seção atual destacado automaticamente |
 | `footer.html` | Rodapé e os scripts do Bootstrap e das máscaras de formulário |
+| `campos.html` | Campos comuns dos formulários de pacientes, médicos e secretários: nome, CPF, contato, data de nascimento, conta e mensagens de erro |
 
 Cada view (`list.html`, `form.html`, `detalhes.html`) declara apenas seu
 próprio `<head>` (com o título da página) e seu `<main>` - o restante da
@@ -99,7 +100,7 @@ Pessoa (abstrata)
 ├── id, telefone, email, usuario
 │
 ├── PessoaFisica (abstrata)
-│   ├── nome, cpf
+│   ├── nome, cpf, dataNascimento
 │   │
 │   ├── Paciente
 │   ├── Medico
@@ -112,11 +113,10 @@ Pessoa (abstrata)
 | Entidade | Atributos próprios | Atributos herdados |
 |---|---|---|
 | `Pessoa` | id, telefone, email, usuario | - |
-| `PessoaFisica` | nome, cpf | telefone, email |
-| `PessoaJuridica` | razaoSocial, cnpj | telefone, email |
-| `Paciente` | consultas | id, telefone, email, nome, cpf |
-| `Medico` | crm, consultas | id, telefone, email, nome, cpf |
-| `Secretario` | - | id, telefone, email, nome, cpf |
+| `PessoaFisica` | nome, cpf, dataNascimento | telefone, email |
+| `Paciente` | consultas | id, telefone, email, nome, cpf, dataNascimento |
+| `Medico` | crm, consultas | id, telefone, email, nome, cpf, dataNascimento |
+| `Secretario` | - | id, telefone, email, nome, cpf, dataNascimento |
 
 `PessoaJuridica` faz parte da hierarquia conforme pedido na atividade, mas
 não possui CRUD próprio no sistema.
@@ -164,6 +164,10 @@ A entidade `Consulta` é o lado dono das duas associações, ou seja, é na tabe
 - Autocadastro de pacientes, com entrada automática no sistema
 - Login, logout e opção "lembrar de mim"
 - Trocar a senha na edição do cadastro
+- Exibir o nome de usuário, somente leitura, na edição do cadastro
+- Registrar a data de nascimento de pacientes, médicos e secretários
+- Exigir 18 anos ou mais de médicos e secretários
+- Impedir o mesmo CPF em mais de um cadastro, mesmo de tipos diferentes
 - "Minhas consultas" do médico ou paciente logado
 - Bloqueio de CPF e nome de usuário repetidos
 - Visualizar todas as consultas de um paciente

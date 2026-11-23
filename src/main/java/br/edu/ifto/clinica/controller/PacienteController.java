@@ -2,9 +2,11 @@ package br.edu.ifto.clinica.controller;
 
 import br.edu.ifto.clinica.model.entity.Paciente;
 import br.edu.ifto.clinica.model.entity.Perfil;
+import br.edu.ifto.clinica.model.entity.PessoaFisica;
 import br.edu.ifto.clinica.model.entity.Usuario;
 import br.edu.ifto.clinica.model.repository.PacienteRepository;
 import br.edu.ifto.clinica.model.repository.PerfilRepository;
+import br.edu.ifto.clinica.model.repository.PessoaFisicaRepository;
 import br.edu.ifto.clinica.model.repository.UsuarioRepository;
 import br.edu.ifto.clinica.model.validation.Cadastro;
 import br.edu.ifto.clinica.model.validation.Edicao;
@@ -44,6 +46,7 @@ public class PacienteController {
     private final PerfilRepository perfilRepository;
     private final PasswordEncoder passwordEncoder;
     private final UsuarioRepository usuarioRepository;
+    private final PessoaFisicaRepository pessoaFisicaRepository;
 
     /**
      * @param pacienteRepository repositório entregue automaticamente pelo Spring.
@@ -51,11 +54,13 @@ public class PacienteController {
      * repositório, sem que seja necessário criá-lo manualmente com new
      */
     public PacienteController(PacienteRepository pacienteRepository, PerfilRepository perfilRepository,
-                              PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository) {
+                              PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository,
+                              PessoaFisicaRepository pessoaFisicaRepository) {
         this.pacienteRepository = pacienteRepository;
         this.perfilRepository = perfilRepository;
         this.passwordEncoder = passwordEncoder;
         this.usuarioRepository = usuarioRepository;
+        this.pessoaFisicaRepository = pessoaFisicaRepository;
     }
 
     /**
@@ -226,10 +231,10 @@ public class PacienteController {
     }
 
     /**
-     * Registra erro se o CPF pertence a outro cadastro. Na edição, o próprio registro não conta como repetido
+     * Registra erro se o CPF pertence a outro paciente, médico ou secretário. Na edição, o próprio registro não conta como repetido
      */
     private void validaCpf(Paciente paciente, BindingResult result) {
-        Paciente existente = pacienteRepository.findByCpf(paciente.getCpf());
+        PessoaFisica existente = pessoaFisicaRepository.findByCpf(paciente.getCpf());
         if (existente != null && !existente.getId().equals(paciente.getId())) {
             result.rejectValue("cpf", "cpf.duplicado", "Este CPF já está cadastrado");
         }

@@ -39,6 +39,4 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
      */
     @Query("select medico from Medico medico where medico.usuario.usuario = :login")
     Medico findByLogin(@Param("login") String login);
-
-    Medico findByCpf(String cpf);
 }

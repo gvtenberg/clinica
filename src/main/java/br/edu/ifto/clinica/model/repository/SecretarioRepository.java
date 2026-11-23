@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SecretarioRepository extends JpaRepository<Secretario, Long> {
-    Secretario findByCpf(String cpf);
 }

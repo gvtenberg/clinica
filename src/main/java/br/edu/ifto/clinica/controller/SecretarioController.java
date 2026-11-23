@@ -1,9 +1,11 @@
 package br.edu.ifto.clinica.controller;
 
 import br.edu.ifto.clinica.model.entity.Perfil;
+import br.edu.ifto.clinica.model.entity.PessoaFisica;
 import br.edu.ifto.clinica.model.entity.Secretario;
 import br.edu.ifto.clinica.model.entity.Usuario;
 import br.edu.ifto.clinica.model.repository.PerfilRepository;
+import br.edu.ifto.clinica.model.repository.PessoaFisicaRepository;
 import br.edu.ifto.clinica.model.repository.SecretarioRepository;
 import br.edu.ifto.clinica.model.repository.UsuarioRepository;
 import br.edu.ifto.clinica.model.validation.Cadastro;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 // Versão adaptada de médico
@@ -34,13 +37,16 @@ public class SecretarioController {
     private final PerfilRepository perfilRepository;
     private final PasswordEncoder passwordEncoder;
     private final UsuarioRepository usuarioRepository;
+    private final PessoaFisicaRepository pessoaFisicaRepository;
 
     public SecretarioController(SecretarioRepository secretarioRepository, PerfilRepository perfilRepository,
-                                PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository) {
+                                PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository,
+                                PessoaFisicaRepository pessoaFisicaRepository) {
         this.secretarioRepository = secretarioRepository;
         this.perfilRepository = perfilRepository;
         this.passwordEncoder = passwordEncoder;
         this.usuarioRepository = usuarioRepository;
+        this.pessoaFisicaRepository = pessoaFisicaRepository;
     }
 
     @GetMapping("/form")
@@ -57,6 +63,7 @@ public class SecretarioController {
     @PostMapping("/save")
     public ModelAndView save(@Validated({Default.class, Cadastro.class}) Secretario secretario, BindingResult result, ModelMap model, RedirectAttributes attributes) {
         validaCpf(secretario, result);
+        validaIdade(secretario, result);
         validaUsuario(secretario, result);
 
         if(result.hasErrors())
@@ -71,6 +78,7 @@ public class SecretarioController {
     @PostMapping("/update")
     public ModelAndView update(@Validated({Default.class, Edicao.class}) Secretario secretario, BindingResult result, ModelMap model, RedirectAttributes attributes) {
         validaCpf(secretario, result);
+        validaIdade(secretario, result);
 
         if(result.hasErrors())
             return new ModelAndView("secretarios/form", model);
@@ -129,10 +137,10 @@ public class SecretarioController {
     }
 
     /**
-     * Registra erro se o CPF pertence a outro cadastro. Na edição, o próprio registro não conta como repetido
+     * Registra erro se o CPF pertence a outro paciente, médico ou secretário. Na edição, o próprio registro não conta como repetido
      */
     private void validaCpf(Secretario secretario, BindingResult result) {
-        Secretario existente = secretarioRepository.findByCpf(secretario.getCpf());
+        PessoaFisica existente = pessoaFisicaRepository.findByCpf(secretario.getCpf());
         if (existente != null && !existente.getId().equals(secretario.getId())) {
             result.rejectValue("cpf", "cpf.duplicado", "Este CPF já está cadastrado");
         }
@@ -144,6 +152,16 @@ public class SecretarioController {
     private void validaUsuario(Secretario secretario, BindingResult result) {
         if (secretario.getUsuario() != null && usuarioRepository.findByUsuario(secretario.getUsuario().getUsuario()) != null) {
             result.rejectValue("usuario.usuario", "usuario.duplicado", "Este usuário já está em uso");
+        }
+    }
+
+    /**
+     * Registra erro se a pessoa tem menos de 18 anos
+     */
+    private void validaIdade(Secretario secretario, BindingResult result) {
+        LocalDate nascimento = secretario.getDataNascimento();
+        if (nascimento != null && nascimento.isAfter(LocalDate.now().minusYears(18))) {
+            result.rejectValue("dataNascimento", "idade.minima", "O(A) secretário(a) deve ter 18 anos ou mais");
         }
     }
 }

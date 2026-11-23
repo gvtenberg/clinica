@@ -2,9 +2,11 @@ package br.edu.ifto.clinica.controller;
 
 import br.edu.ifto.clinica.model.entity.Medico;
 import br.edu.ifto.clinica.model.entity.Perfil;
+import br.edu.ifto.clinica.model.entity.PessoaFisica;
 import br.edu.ifto.clinica.model.entity.Usuario;
 import br.edu.ifto.clinica.model.repository.MedicoRepository;
 import br.edu.ifto.clinica.model.repository.PerfilRepository;
+import br.edu.ifto.clinica.model.repository.PessoaFisicaRepository;
 import br.edu.ifto.clinica.model.repository.UsuarioRepository;
 import br.edu.ifto.clinica.model.validation.Cadastro;
 import br.edu.ifto.clinica.model.validation.Edicao;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 /**
@@ -40,6 +43,7 @@ public class MedicoController {
     private final PerfilRepository perfilRepository;
     private final PasswordEncoder passwordEncoder;
     private final UsuarioRepository usuarioRepository;
+    private final PessoaFisicaRepository pessoaFisicaRepository;
 
     /**
      * @param medicoRepository repositório entregue automaticamente pelo Spring.
@@ -47,11 +51,13 @@ public class MedicoController {
      * repositório, sem que seja necessário criá-lo manualmente com new
      */
     public MedicoController(MedicoRepository medicoRepository, PerfilRepository perfilRepository,
-                            PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository) {
+                            PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository,
+                            PessoaFisicaRepository pessoaFisicaRepository) {
         this.medicoRepository = medicoRepository;
         this.perfilRepository = perfilRepository;
         this.passwordEncoder = passwordEncoder;
         this.usuarioRepository = usuarioRepository;
+        this.pessoaFisicaRepository = pessoaFisicaRepository;
     }
 
     /**
@@ -88,6 +94,7 @@ public class MedicoController {
     @PostMapping("/save")
     public ModelAndView save(@Validated({Default.class, Cadastro.class}) Medico medico, BindingResult result, ModelMap model, RedirectAttributes attributes) {
         validaCpf(medico, result);
+        validaIdade(medico, result);
         validaUsuario(medico, result);
 
         if(result.hasErrors())
@@ -111,6 +118,7 @@ public class MedicoController {
     @PostMapping("/update")
     public ModelAndView update(@Validated({Default.class, Edicao.class}) Medico medico, BindingResult result, ModelMap model, RedirectAttributes attributes) {
         validaCpf(medico, result);
+        validaIdade(medico, result);
 
         if(result.hasErrors())
             return new ModelAndView("medicos/form", model);
@@ -193,10 +201,10 @@ public class MedicoController {
     }
 
     /**
-     * Registra erro se o CPF pertence a outro cadastro. Na edição, o próprio registro não conta como repetido
+     * Registra erro se o CPF pertence a outro paciente, médico ou secretário. Na edição, o próprio registro não conta como repetido
      */
     private void validaCpf(Medico medico, BindingResult result) {
-        Medico existente = medicoRepository.findByCpf(medico.getCpf());
+        PessoaFisica existente = pessoaFisicaRepository.findByCpf(medico.getCpf());
         if (existente != null && !existente.getId().equals(medico.getId())) {
             result.rejectValue("cpf", "cpf.duplicado", "Este CPF já está cadastrado");
         }
@@ -208,6 +216,16 @@ public class MedicoController {
     private void validaUsuario(Medico medico, BindingResult result) {
         if (medico.getUsuario() != null && usuarioRepository.findByUsuario(medico.getUsuario().getUsuario()) != null) {
             result.rejectValue("usuario.usuario", "usuario.duplicado", "Este usuário já está em uso");
+        }
+    }
+
+    /**
+     * Registra erro se a pessoa tem menos de 18 anos
+     */
+    private void validaIdade(Medico medico, BindingResult result) {
+        LocalDate nascimento = medico.getDataNascimento();
+        if (nascimento != null && nascimento.isAfter(LocalDate.now().minusYears(18))) {
+            result.rejectValue("dataNascimento", "idade.minima", "O(A) médico(a) deve ter 18 anos ou mais");
         }
     }
 }

@@ -33,25 +33,25 @@ INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES
     (11,3),
     (12,3);
 
--- id, nome, cpf, email, telefone
-INSERT INTO paciente (id, nome, cpf, email, telefone, id_usuario) VALUES
-    (1, 'Ana Beatriz Souza', '111.222.333-96', 'ana.beatriz@email.com', '(63) 99912-3456', 3),
-    (2, 'Carlos Henrique Lima', '222.333.444-05', 'carlos.lima@email.com', '(63) 99876-5432', 4),
-    (3, 'Mariana Oliveira Costa', '333.444.555-08', 'mariana.costa@email.com', '(63) 99123-4567', 5),
-    (4, 'João Pedro Martins', '444.555.666-19', 'joao.martins@email.com', '(63) 99234-5678', 6),
-    (5, 'Fernanda Alves Rocha', '555.666.777-20', 'fernanda.rocha@email.com', '(63) 99345-6789', 7),
-    (6, 'Lucas Gabriel Santos', '666.777.888-30', 'lucas.santos@email.com', '(63) 99456-7890', 8);
+-- id, nome, cpf, email, telefone, data de nascimento
+INSERT INTO paciente (id, nome, cpf, email, telefone, data_nascimento, id_usuario) VALUES
+    (1, 'Ana Beatriz Souza', '111.222.333-96', 'ana.beatriz@email.com', '(63) 99912-3456', '1990-03-15', 3),
+    (2, 'Carlos Henrique Lima', '222.333.444-05', 'carlos.lima@email.com', '(63) 99876-5432', '1985-07-22', 4),
+    (3, 'Mariana Oliveira Costa', '333.444.555-08', 'mariana.costa@email.com', '(63) 99123-4567', '1998-11-05', 5),
+    (4, 'João Pedro Martins', '444.555.666-19', 'joao.martins@email.com', '(63) 99234-5678', '1979-01-30', 6),
+    (5, 'Fernanda Alves Rocha', '555.666.777-20', 'fernanda.rocha@email.com', '(63) 99345-6789', '2001-09-12', 7),
+    (6, 'Lucas Gabriel Santos', '666.777.888-30', 'lucas.santos@email.com', '(63) 99456-7890', '1993-05-27', 8);
 
--- id, nome, cpf, crm, email, telefone
-INSERT INTO medico (id, nome, cpf, crm, email, telefone, id_usuario) VALUES
-    (7, 'Roberto Almeida', '777.888.999-41', 'CRM-TO 12345', 'roberto.almeida@clinica.com', '(63) 98888-1111', 9),
-    (8, 'Juliana Mendes', '888.999.000-78', 'CRM-TO 23456', 'juliana.mendes@clinica.com', '(63) 98888-2222', 10),
-    (9, 'Marcos Vinicius Ferreira', '999.000.111-12', 'CRM-TO 34567', 'marcos.ferreira@clinica.com', '(63) 98888-3333', 11),
-    (10, 'Patrícia Ribeiro', '000.111.222-85', 'CRM-TO 45678', 'patricia.ribeiro@clinica.com', '(63) 98888-4444', 12);
+-- id, nome, cpf, crm, email, telefone, data de nascimento
+INSERT INTO medico (id, nome, cpf, crm, email, telefone, data_nascimento, id_usuario) VALUES
+    (7, 'Roberto Almeida', '777.888.999-41', 'CRM-TO 12345', 'roberto.almeida@clinica.com', '(63) 98888-1111', '1975-04-10', 9),
+    (8, 'Juliana Mendes', '888.999.000-78', 'CRM-TO 23456', 'juliana.mendes@clinica.com', '(63) 98888-2222', '1982-08-19', 10),
+    (9, 'Marcos Vinicius Ferreira', '999.000.111-12', 'CRM-TO 34567', 'marcos.ferreira@clinica.com', '(63) 98888-3333', '1970-12-03', 11),
+    (10, 'Patrícia Ribeiro', '000.111.222-85', 'CRM-TO 45678', 'patricia.ribeiro@clinica.com', '(63) 98888-4444', '1988-06-25', 12);
 
--- id, nome, cpf, email, telefone, id do usuário
-INSERT INTO secretario (id, nome, cpf, email, telefone, id_usuario) VALUES
-    (11, 'Alex Nogueira', '529.982.247-25', 'alex.nogueira@clinica.com', '(63) 98888-5555', 2);
+-- id, nome, cpf, email, telefone, data de nascimento
+INSERT INTO secretario (id, nome, cpf, email, telefone, data_nascimento, id_usuario) VALUES
+    (11, 'Alex Nogueira', '529.982.247-25', 'alex.nogueira@clinica.com', '(63) 98888-5555', '1995-02-14', 2);
 
 -- id, data, valor, observacao, id_paciente, id_medico
 INSERT INTO consulta (id, data, valor, observacao, id_paciente, id_medico) VALUES

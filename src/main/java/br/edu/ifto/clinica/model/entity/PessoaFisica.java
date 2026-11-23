@@ -3,7 +3,12 @@ package br.edu.ifto.clinica.model.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 /**
  * Entidade abstrata que representa uma pessoa física, herdando os dados de contato de Pessoa e
@@ -29,6 +34,14 @@ public abstract class PessoaFisica extends Pessoa {
     @Column(unique = true)
     private String cpf;
 
+    /**
+     * @DateTimeFormat informa ao Spring o formato enviado pelo campo date do formulário
+     */
+    @NotNull(message = "A data de nascimento é obrigatória")
+    @PastOrPresent(message = "A data de nascimento não pode ser futura")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataNascimento;
+
     public PessoaFisica() {}
 
     public String getNome() {
@@ -45,5 +58,13 @@ public abstract class PessoaFisica extends Pessoa {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 }
