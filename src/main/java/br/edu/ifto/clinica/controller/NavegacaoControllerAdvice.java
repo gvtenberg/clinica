@@ -22,6 +22,9 @@ public class NavegacaoControllerAdvice {
         if(caminho.equals("/login")){
             return "login";
         }
+        if(caminho.equals("/consultas/minhas")){
+            return "minhas";
+        }
         if(caminho.startsWith("/consultas")){
             return "consultas";
         }

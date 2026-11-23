@@ -33,4 +33,10 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
      */
     @Query("select c from Consulta c where c.medico.id = :id")
     public List<Consulta> findConsultasById(@Param("id") Long id);
+
+    /**
+     * Busca a pessoa pelo nome de usuário da conta vinculada a ela
+     */
+    @Query("select medico from Medico medico where medico.usuario.usuario = :login")
+    Medico findByLogin(@Param("login") String login);
 }

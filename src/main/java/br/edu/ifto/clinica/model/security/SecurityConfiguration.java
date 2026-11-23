@@ -6,12 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration // classe de configuração
@@ -32,19 +28,18 @@ public class SecurityConfiguration {
                         // Páginas públicas: acessíveis sem login
                         .requestMatchers("/", "/css/**", "/js/**", "/images/**").permitAll()
 
-//####################### Alterar depois para mostrar somente consultas do médico/paciente logado #######################//
-                        .requestMatchers("/consultas/paciente/1").hasAnyRole("PACIENTE", "SECRETARIA", "ADMIN")
-                        .requestMatchers("/consultas/medico/7").hasAnyRole("MEDICO", "SECRETARIA", "ADMIN")
+                        // Cada médico ou paciente vê somente as próprias consultas
+                        .requestMatchers("/consultas/minhas").hasAnyRole("MEDICO", "PACIENTE")
 
                         // Consultas são gerenciadas pela secretaria e administrador
-                        .requestMatchers("/consultas/**").hasAnyRole("SECRETARIA", "ADMIN")
+                        .requestMatchers("/consultas/**").hasAnyRole("SECRETARIO", "ADMIN")
 
                         // Somente o administrador exclui pacientes
                         .requestMatchers("/pacientes/remove/**").hasRole("ADMIN")
-                        .requestMatchers("/pacientes/**").hasAnyRole("SECRETARIA", "ADMIN")
+                        .requestMatchers("/pacientes/**").hasAnyRole("SECRETARIO", "ADMIN")
 
                         // A secretaria apenas consulta a lista de médicos
-                        .requestMatchers("/medicos/list").hasAnyRole("SECRETARIA", "ADMIN")
+                        .requestMatchers("/medicos/list").hasAnyRole("SECRETARIO", "ADMIN")
                         .requestMatchers("/medicos/**").hasRole("ADMIN")
 
                         //.requestMatchers(HttpMethod.POST, "/pessoa/save").permitAll()
@@ -62,31 +57,6 @@ public class SecurityConfiguration {
                 )
                 .rememberMe(withDefaults()); // mantém o usuário autenticado após fechar o navegador
         return http.build();
-    }
-
-    /**
-     * @param passwordEncoder codificador usado para gerar o hash BCrypt das senhas
-     * @return serviço que o Spring Security consulta para localizar usuários no momento do login
-     */
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder.encode("admin"))
-                .roles("ADMIN")
-                .build();
-        UserDetails secretaria = User.withUsername("secretaria")
-                .password(passwordEncoder.encode("123"))
-                .roles("SECRETARIA")
-                .build();
-        UserDetails medico = User.withUsername("medico")
-                .password(passwordEncoder.encode("123"))
-                .roles("MEDICO")
-                .build();
-        UserDetails paciente = User.withUsername("paciente")
-                .password(passwordEncoder.encode("123"))
-                .roles("PACIENTE")
-                .build();
-        return new InMemoryUserDetailsManager(admin, secretaria, medico, paciente);
     }
 
     /**

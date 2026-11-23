@@ -47,6 +47,20 @@
             </div>
         </div>
 
+        <div class="row" th:if="${medico.id == null}">
+            <div class="col-md-6 mb-3">
+                <label class="form-label" for="usuario">Usuário:</label>
+                <input class="form-control" id="usuario" type="text" th:field="*{usuario.usuario}" th:errorclass="is-invalid"
+                       maxlength="50" autocomplete="username" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label" for="senha">Senha:</label>
+                <input class="form-control" id="senha" type="password" th:field="*{usuario.senha}" th:errorclass="is-invalid"
+                       maxlength="50" autocomplete="new-password" required>
+            </div>
+        </div>
+
         <input class="btn btn-primary" type="submit" th:value="${medico.id == null} ? 'Cadastrar Médico' : 'Salvar Alterações'">
     </form>
 </main>

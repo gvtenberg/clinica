@@ -1,10 +1,14 @@
 package br.edu.ifto.clinica.controller;
 
 import br.edu.ifto.clinica.model.entity.Consulta;
+import br.edu.ifto.clinica.model.entity.Medico;
+import br.edu.ifto.clinica.model.entity.Paciente;
 import br.edu.ifto.clinica.model.repository.ConsultaRepository;
 import br.edu.ifto.clinica.model.repository.MedicoRepository;
 import br.edu.ifto.clinica.model.repository.PacienteRepository;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -189,6 +193,26 @@ public class ConsultaController {
         model.addAttribute("consultas", medicoRepository.findConsultasById(id));
         model.addAttribute("medico", medicoRepository.findById(id).orElseThrow()); // Para a view mostrar mais dados
         return new ModelAndView("consultas/detalhes", model);
+    }
+
+    /**
+     * @param usuarioLogado usuário autenticado, entregue pelo Spring Security
+     * @param model objeto utilizado para transportar dados do controller para a view
+     * @return view com as consultas do paciente ou do médico que está logado
+     */
+    @GetMapping("/minhas")
+    public ModelAndView minhasConsultas(@AuthenticationPrincipal UserDetails usuarioLogado, ModelMap model) {
+        Paciente paciente = pacienteRepository.findByLogin(usuarioLogado.getUsername());
+        if (paciente != null) {
+            return consultaPaciente(paciente.getId(), model);
+        }
+
+        Medico medico = medicoRepository.findByLogin(usuarioLogado.getUsername());
+        if (medico == null) {
+            throw new IllegalArgumentException("Nenhuma pessoa vinculada a este usuário");
+        }
+
+        return consultaMedico(medico.getId(), model);
     }
 
     /**

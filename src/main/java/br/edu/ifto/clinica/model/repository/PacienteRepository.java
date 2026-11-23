@@ -33,4 +33,10 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
      */
     @Query("select c from Consulta c where c.paciente.id = :id")
     public List<Consulta> findConsultasById(@Param("id") Long id);
+
+    /**
+     * Busca a pessoa pelo nome de usuário da conta vinculada a ela
+     */
+    @Query("select paciente from Paciente paciente where paciente.usuario.usuario = :login")
+    Paciente findByLogin(@Param("login") String login);
 }

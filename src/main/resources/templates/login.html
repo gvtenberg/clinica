@@ -13,7 +13,7 @@
                 <div class="card shadow-sm">
                     <h1 class="card-header h5">Informe usuário e senha</h1> <!-- Alterar aqui: excluir linha? -->
                     <div class="card-body">
-                        <form th:action="@{/login}" method="post">
+                        <form th:action="@{/login}" method="post"> <!--/* Enviados para o sprgin, pois não foram criados métodos POST nos controllers */-->
                             <div class="mb-3">
                                 <label for="username" class="form-label">Usuário</label>
                                 <input id="username" name="username" class="form-control"

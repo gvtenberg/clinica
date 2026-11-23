@@ -40,6 +40,10 @@ public abstract class Pessoa {
     @Email(message = "O e-mail deve seguir o formato nome@dominio.com", regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
     private String email;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario", unique = true)
+    private Usuario usuario;
+
     public Pessoa() {}
 
     public Long getId() {
@@ -52,6 +56,14 @@ public abstract class Pessoa {
 
     public String getTelefone() {
         return telefone;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public void setTelefone(String telefone) {

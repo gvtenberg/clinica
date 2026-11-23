@@ -9,23 +9,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item" sec:authorize="hasRole('MEDICO')">
+                    <li class="nav-item" sec:authorize="hasAnyRole('MEDICO', 'PACIENTE')">
                         <a class="nav-link" th:classappend="${paginaAtual == 'minhas'} ? 'active'"
-                           th:aria-current="${paginaAtual == 'minhas'} ? 'page'" th:href="@{/consultas/medico/7}">Minhas consultas</a>
+                           th:aria-current="${paginaAtual == 'minhas'} ? 'page'" th:href="@{/consultas/minhas}">Minhas consultas</a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasRole('PACIENTE')">
-                        <a class="nav-link" th:classappend="${paginaAtual == 'minhas'} ? 'active'"
-                           th:aria-current="${paginaAtual == 'minhas'} ? 'page'" th:href="@{/consultas/paciente/1}">Minhas consultas</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')">
+                    <li class="nav-item" sec:authorize="hasAnyRole('SECRETARIO', 'ADMIN')">
                         <a class="nav-link" th:classappend="${paginaAtual == 'consultas'} ? 'active'"
                            th:aria-current="${paginaAtual == 'consultas'} ? 'page'" th:href="@{/consultas/list}">Consultas</a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')">
+                    <li class="nav-item" sec:authorize="hasAnyRole('SECRETARIO', 'ADMIN')">
                         <a class="nav-link" th:classappend="${paginaAtual == 'pacientes'} ? 'active'"
                            th:aria-current="${paginaAtual == 'pacientes'} ? 'page'" th:href="@{/pacientes/list}">Pacientes</a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyRole('SECRETARIA', 'ADMIN')">
+                    <li class="nav-item" sec:authorize="hasAnyRole('SECRETARIO', 'ADMIN')">
                         <a class="nav-link" th:classappend="${paginaAtual == 'medicos'} ? 'active'"
                            th:aria-current="${paginaAtual == 'medicos'} ? 'page'" th:href="@{/medicos/list}">Médicos</a>
                     </li>

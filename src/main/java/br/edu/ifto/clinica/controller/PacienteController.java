@@ -1,8 +1,12 @@
 package br.edu.ifto.clinica.controller;
 
 import br.edu.ifto.clinica.model.entity.Paciente;
+import br.edu.ifto.clinica.model.entity.Perfil;
+import br.edu.ifto.clinica.model.entity.Usuario;
 import br.edu.ifto.clinica.model.repository.PacienteRepository;
+import br.edu.ifto.clinica.model.repository.PerfilRepository;
 import jakarta.validation.Valid;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,14 +32,19 @@ import java.util.Optional;
 @RequestMapping("pacientes")
 public class PacienteController {
     private final PacienteRepository pacienteRepository;
+    private final PerfilRepository perfilRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * @param pacienteRepository repositório entregue automaticamente pelo Spring.
      * Como a classe possui apenas um construtor, o Spring o utiliza para entregar o
      * repositório, sem que seja necessário criá-lo manualmente com new
      */
-    public PacienteController(PacienteRepository pacienteRepository) {
+    public PacienteController(PacienteRepository pacienteRepository, PerfilRepository perfilRepository,
+                              PasswordEncoder passwordEncoder) {
         this.pacienteRepository = pacienteRepository;
+        this.perfilRepository = perfilRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -74,6 +83,7 @@ public class PacienteController {
         if(result.hasErrors())
             return new ModelAndView("pacientes/form", model); // Retorna ao formulário com os dados preenchidos
 
+        criarConta(paciente);
         pacienteRepository.save(paciente);
         attributes.addFlashAttribute("sucesso", "Paciente '" + paciente.getNome() + "' cadastrado(a) com sucesso!");
         return new ModelAndView("redirect:/pacientes/list");
@@ -93,6 +103,7 @@ public class PacienteController {
         if(result.hasErrors())
             return new ModelAndView("pacientes/form", model);
 
+        paciente.setUsuario(pacienteRepository.findById(paciente.getId()).orElseThrow().getUsuario());
         pacienteRepository.save(paciente);
         attributes.addFlashAttribute("sucesso", "Dados do(a) Paciente '" + paciente.getNome() + "' atualizados com sucesso");
         return new ModelAndView("redirect:/pacientes/list");
@@ -136,5 +147,22 @@ public class PacienteController {
     public ModelAndView edit(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("paciente", pacienteRepository.findById(id).orElseThrow());
         return new ModelAndView("pacientes/form", model);
+    }
+
+    /**
+     * Monta a conta de acesso da pessoa com o perfil inicial e a senha codificada.
+     * Aproveita do formulário somente o usuário e a senha
+     */
+    private void criarConta(Paciente paciente) {
+        Perfil perfil = perfilRepository.findByNome("PACIENTE");
+        if (perfil == null) {
+            throw new IllegalArgumentException("Perfil PACIENTE não encontrado");
+        }
+
+        Usuario digitado = paciente.getUsuario();
+        Usuario conta = new Usuario(digitado.getUsuario(), passwordEncoder.encode(digitado.getSenha()));
+        conta.adicionarPerfil(perfil);
+        paciente.setId(null); // cadastro não sobrescreve uma pessoa existente
+        paciente.setUsuario(conta);
     }
 }
